@@ -20,6 +20,7 @@
         }
         
         .container {
+            position: relative;
             max-width: 480px;
             width: 100%;
             background: #09090b;
@@ -56,14 +57,156 @@
             100% { border-color: #ee82ee; box-shadow: 0 0 25px #ee82ee; }
         }
 
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
         .site-title {
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: #4b5563;
-            margin-bottom: 10px;
             font-weight: 700;
         }
+
+        /* Кнопка справки */
+        .info-btn {
+            background: #141417;
+            border: 1px solid #27272a;
+            color: #a1a1aa;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .info-btn:hover {
+            color: #ffffff;
+            border-color: #3f3f46;
+            background: #1f1f23;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: #0d0d11;
+            border: 1px solid #27272a;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: left;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #71717a;
+            font-size: 22px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .modal-subtitle {
+            font-size: 13px;
+            color: #71717a;
+            margin-bottom: 20px;
+        }
+
+        .rarity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .rarity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #18181b;
+            font-size: 15px;
+        }
+
+        .rarity-item:last-child {
+            border-bottom: none;
+        }
+
+        .rarity-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .rarity-chance {
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 15px;
+            background: #141417;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid #27272a;
+        }
+
+        .color-common { color: #a1a1aa; }
+        .color-rare { color: #3b82f6; }
+        .color-epic { color: #a78bfa; }
+        .color-mythical { color: #ef4444; }
+        .color-legendary { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
         
         h1 { 
             color: #ffffff; 
@@ -166,7 +309,11 @@
 <body>
 
     <div class="container" id="main-container">
-        <div class="site-title">Редкость карточек</div>
+        <div class="header-top">
+            <div class="site-title">Редкость карточек</div>
+            <button class="info-btn" id="open-modal-btn" title="Шансы редкостей">?</button>
+        </div>
+        
         <h1>Рандомный выбор редкости карточек</h1>
         
         <div class="site-timer-container">
@@ -184,7 +331,40 @@
             </div>
         </div>
     </div>
-     <script>
+
+    <!-- Модальное окно шансов -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" id="close-modal-btn">&times;</button>
+            <div class="modal-title">Вероятности генерации</div>
+            <div class="modal-subtitle">Шансы выпадения редкостей в системе:</div>
+            
+            <ul class="rarity-list">
+                <li class="rarity-item color-common">
+                    <span class="rarity-name">⚪ Обычная</span>
+                    <span class="rarity-chance">35%</span>
+                </li>
+                <li class="rarity-item color-rare">
+                    <span class="rarity-name">🔷 Редкая</span>
+                    <span class="rarity-chance">34%</span>
+                </li>
+                <li class="rarity-item color-epic">
+                    <span class="rarity-name">✨ Эпическая</span>
+                    <span class="rarity-chance">25%</span>
+                </li>
+                <li class="rarity-item color-mythical">
+                    <span class="rarity-name">💥 Мифическая</span>
+                    <span class="rarity-chance">5%</span>
+                </li>
+                <li class="rarity-item color-legendary">
+                    <span class="rarity-name">👑 Легендарная</span>
+                    <span class="rarity-chance">1%</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
         const pool = {
             common: [
                 "Обычный дроп на сегодня. Базовый исход ⚪💤",
@@ -316,6 +496,25 @@
                 display.className = "";
                 
                 alert("🌈 ПАСХАЛКА АКТИВИРОВАНА! Режим Awesome включен!");
+            }
+        });
+
+        /* Скрипт управления модальным окном */
+        const modalOverlay = document.getElementById("modal-overlay");
+        const openModalBtn = document.getElementById("open-modal-btn");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+
+        openModalBtn.addEventListener("click", () => {
+            modalOverlay.classList.add("active");
+        });
+
+        closeModalBtn.addEventListener("click", () => {
+            modalOverlay.classList.remove("active");
+        });
+
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove("active");
             }
         });
 
