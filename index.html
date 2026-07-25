@@ -86,17 +86,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .info-btn:hover {
             color: #ffffff;
             border-color: #3f3f46;
             background: #1f1f23;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
-        /* Модальное окно */
+        .info-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* Быстрое модальное окно */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -104,14 +109,15 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(6px);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
+            will-change: opacity, visibility;
         }
 
         .modal-overlay.active {
@@ -128,13 +134,14 @@
             width: 90%;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
             position: relative;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(10px);
+            transition: transform 0.15s ease-out;
+            will-change: transform;
             text-align: left;
         }
 
         .modal-overlay.active .modal-card {
-            transform: scale(1);
+            transform: translateY(0);
         }
 
         .modal-close {
@@ -146,7 +153,7 @@
             color: #71717a;
             font-size: 22px;
             cursor: pointer;
-            transition: color 0.2s ease;
+            transition: color 0.15s ease;
         }
 
         .modal-close:hover {
