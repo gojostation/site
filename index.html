@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редкость карточек</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: #09090b;
+            padding: 40px 25px;
+            border-radius: 24px;
+            border: 1px solid #1f1f23;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+            transition: all 0.3s ease;
+        }
+
+        /* Эффект пульсирующей Яндекс Волны */
+        .container-shuffling {
+            animation: glow-wave 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes glow-wave {
+            0% {
+                box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3), 0 20px 40px rgba(0,0,0,0.9);
+            }
+            50% {
+                box-shadow: 0 0 0 25px rgba(255, 255, 255, 0), 0 20px 40px rgba(0,0,0,0.9);
+            }
+            100% {
+                box-shadow: 0 0 0 0px rgba(255, 255, 255, 0), 0 20px 40px rgba(0,0,0,0.9);
+            }
+        }
+
+        .site-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #4b5563;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        h1 { 
+            color: #ffffff; 
+            margin-bottom: 35px; 
+            font-size: 26px; 
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        #timer-box {
+            font-size: 20px;
+            font-weight: bold;
+            color: #a1a1aa;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 12px;
+            background: #141417;
+            border: 1px solid #27272a;
+        }
+        #countdown {
+            color: #ffffff;
+            font-family: monospace;
+            font-size: 24px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        #card-display {
+            margin-top: 20px;
+            padding: 30px 20px;
+            border-radius: 16px;
+            background: #020202;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #18181b;
+        }
+
+        .rarity-tag {
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .comment-text { 
+            font-size: 18px; 
+            color: #a1a1aa; 
+        }
+        
+        /* Стили редкостей */
+        .common-style { border-color: #3f3f46 !important; box-shadow: 0 0 15px rgba(63,63,70,0.3); }
+        .common-style .rarity-tag { color: #a1a1aa; }
+        
+        .rare-style { border-color: #2563eb !important; box-shadow: 0 0 20px rgba(37,99,235,0.4); }
+        .rare-style .rarity-tag { color: #3b82f6; }
+        
+        .epic-style { border-color: #7c3aed !important; box-shadow: 0 0 20px rgba(124,58,237,0.5); }
+        .epic-style .rarity-tag { color: #a78bfa; }
+        
+        .mythical-style { border-color: #dc2626 !important; box-shadow: 0 0 25px rgba(220,38,38,0.5); }
+        .mythical-style .rarity-tag { color: #ef4444; }
+
+        .legendary-style { 
+            border-color: #d97706 !important; 
+            box-shadow: 0 0 35px rgba(217,119,6,0.8); 
+            animation: pulse 1.2s infinite;
+        }
+        .legendary-style .rarity-tag { color: #fbbf24; text-shadow: 0 0 15px rgba(251,191,36,0.9); }
+        .legendary-style .comment-text { color: #fef08a; font-weight: bold; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(217,119,6,0.5); }
+            50% { box-shadow: 0 0 40px rgba(217,119,6,0.9); }
+            100% { box-shadow: 0 0 20px rgba(217,119,6,0.5); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-container">
+        <div class="site-title">Редкость карточек</div>
+        <h1>Рандомный выбор редкости карточек</h1>
+        
+        <div id="timer-box">
+            ⏳ До раскрытия редкости дня:
+            <span id="countdown">00:00:00</span>
+        </div>
+
+        <div id="card-display" style="display: none;">
+            <div class="rarity-tag" id="rarity-text"></div>
+            <div class="comment-text" id="comment-text"></div>
+        </div>
+    </div>
+
+    <script>
+        const pool = {
+            common: [
+                "Обычный дроп. Ну, бывает... ⚪💤",
+                "Дефолт. Самый частый исход ⚪🌫️",
+                "В этот раз скромно. Завтра повезет больше! ⚪🔄"
+            ],
+            rare: [
+                "Хороший улов, уже интересно! 🔷💎",
+                "Редкая! Отличный результат! 🔷😎",
+                "Удача начинает разгоняться! 🔷🚀",
+                "Неплохо, уверенный синий дроп! 🔷⚡"
+            ],
+            epic: [
+                "Ого, вот это повезло! ЭПИК! ✨🔥",
+                "Фиолетовое свечение! Нереальная удача! ✨🌌",
+                "Превосходно! Фортуна сегодня с нами! ✨⚡",
+                "Почти максимум! Очень крутой дроп! ✨🌟"
+            ],
+            mythical: [
+                "ОГО! МИФИЧЕСКИЙ ДРОП! Крутейший исход! 💥💎",
+                "ПОЛНЫЙ УЛЁТ! Почти абсолютный максимум! 💥🔥",
+                "Шансы были малы, но сегодня выпал Мифик! 💥🏆"
+            ],
+            legendary: [
+                "ЧТООО?! ЛЕГЕНДАРНАЯ РЕДКОСТЬ!!! 👑✨",
+                "АБСОЛЮТНОЕ БЕЗУМИЕ! Сегодня САМЫЙ РЕДКИЙ исход в игре! 👑🏆",
+                "БОЖЕСТВЕННАЯ УДАЧА! Сегодняшний день легендарен! 👑🔥"
+            ]
+        };
+
+        function getSeedBasedRandom() {
+            const today = new Date();
+            const seedString = "" + today.getFullYear() + today.getMonth() + today.getDate();
+            
+            let hash = 0;
+            for (let i = 0; i < seedString.length; i++) {
+                hash = seedString.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return Math.abs(hash) % 100;
+        }
+
+        function updateGachaSystem() {
+            const container = document.getElementById("main-container");
+            const timerBox = document.getElementById("timer-box");
+            const countdown = document.getElementById("countdown");
+            const display = document.getElementById("card-display");
+
+            const now = new Date();
+            const targetTime = new Date();
+            targetTime.setHours(20, 31, 0, 0);
+
+            if (now >= targetTime) {
+                targetTime.setDate(targetTime.getDate() + 1);
+            }
+
+            const difference = targetTime - now;
+
+            if (difference > 0 && now.getHours() < 20 || (now.getHours() == 20 && now.getMinutes() < 31)) {
+                timerBox.style.display = "block";
+                display.style.display = "none";
+                container.classList.add("container-shuffling");
+
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / (1000 * 60)) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+
+                countdown.innerText = 
+                    (hours < 10 ? "0" + hours : hours) + ":" + 
+                    (minutes < 10 ? "0" + minutes : minutes) + ":" + 
+                    (seconds < 10 ? "0" + seconds : seconds);
+            } else {
+                container.classList.remove("container-shuffling");
+                timerBox.style.display = "none";
+                display.style.display = "flex";
+
+                const chance = getSeedBasedRandom();
+                revealDailyCard(chance);
+            }
+        }
+
+        function revealDailyCard(chance) {
+            let rarity = "";
+            let phraseList = [];
+            let cssClass = "";
+
+            if (chance < 1) {
+                rarity = "👑 ЛЕГЕНДАРНАЯ РЕДКОСТЬ 👑";
+                phraseList = pool.legendary;
+                cssClass = "legendary-style";
+            } else if (chance < 6) {
+                rarity = "💥 МИФИЧЕСКАЯ РЕДКОСТЬ!!! 💥";
+                phraseList = pool.mythical;
+                cssClass = "mythical-style";
+            } else if (chance < 40) {
+                rarity = "⚪ ОБЫЧНАЯ РЕДКОСТЬ ⚪";
+                phraseList = pool.common;
+                cssClass = "common-style";
+            } else if (chance < 65) {
+                rarity = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
+                phraseList = pool.epic;
+                cssClass = "epic-style";
+            } else {
+                rarity = "🔷 РЕДКАЯ РЕДКОСТЬ 🔷";
+                phraseList = pool.rare;
+                cssClass = "rare-style";
+            }
+
+            const phraseIndex = chance % phraseList.length;
+            let randomPhrase = phraseList[phraseIndex];
+
+            let display = document.getElementById("card-display");
+            display.className = ""; 
+            display.classList.add(cssClass);
+            
+            document.getElementById("rarity-text").innerText = rarity;
+            document.getElementById("comment-text").innerText = randomPhrase;
+        }
+
+        setInterval(updateGachaSystem, 1000);
+        updateGachaSystem();
+    </script>
+
+</body>
+</html>
