@@ -3,104 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Редкость карточек</title>
+    <title>Станция "Годжо Сатору" — v2.32</title>
+
     <style>
         body {
             font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
-            background-color: #000000;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        
-        .container {
-            position: relative;
-            max-width: 480px;
-            width: 100%;
-            background: #09090b;
-            padding: 40px 25px;
-            border-radius: 24px;
-            border: 1px solid #1f1f23;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.9);
-            transition: all 0.3s ease;
+            background:#000;
+            color:#fff;
+            text-align:center;
+            padding:20px;
+            margin:0;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            box-sizing:border-box;
         }
 
-        /* Эффект пульсирующей Яндекс Волны */
-        .container-shuffling {
-            animation: glow-wave 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        .container{
+            position:relative;
+            max-width:480px;
+            width:100%;
+            background:#09090b;
+            padding:40px 25px;
+            border-radius:24px;
+            border:1px solid #1f1f23;
+            box-shadow:0 20px 40px rgba(0,0,0,.9);
+            transition:.3s;
         }
 
-        @keyframes glow-wave {
-            0% { box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.3), 0 20px 40px rgba(0,0,0,0.9); }
-            50% { box-shadow: 0 0 0 25px rgba(255, 255, 255, 0), 0 20px 40px rgba(0,0,0,0.9); }
-            100% { box-shadow: 0 0 0 0px rgba(255, 255, 255, 0), 0 20px 40px rgba(0,0,0,0.9); }
+        .container-shuffling{
+            animation:glow-wave 1.2s cubic-bezier(.4,0,.2,1) infinite;
         }
 
-        /* Радужная пасхалка awesome */
-        .awesome-rainbow {
-            animation: rainbow-glow 2s linear infinite !important;
+        @keyframes glow-wave{
+            0%{
+                box-shadow:0 0 0 0 rgba(255,255,255,.3),
+                0 20px 40px rgba(0,0,0,.9);
+            }
+
+            50%{
+                box-shadow:0 0 0 25px rgba(255,255,255,0),
+                0 20px 40px rgba(0,0,0,.9);
+            }
+
+            100%{
+                box-shadow:0 0 0 0 rgba(255,255,255,0),
+                0 20px 40px rgba(0,0,0,.9);
+            }
         }
 
-        @keyframes rainbow-glow {
-            0% { border-color: #ff0000; box-shadow: 0 0 25px #ff0000; }
-            17% { border-color: #ffa500; box-shadow: 0 0 25px #ffa500; }
-            33% { border-color: #ffff00; box-shadow: 0 0 25px #ffff00; }
-            50% { border-color: #008000; box-shadow: 0 0 25px #008000; }
-            67% { border-color: #0000ff; box-shadow: 0 0 25px #0000ff; }
-            84% { border-color: #4b0082; box-shadow: 0 0 25px #4b0082; }
-            100% { border-color: #ee82ee; box-shadow: 0 0 25px #ee82ee; }
+        .awesome-rainbow{
+            animation:rainbow-glow 2s linear infinite!important;
         }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+        @keyframes rainbow-glow{
+            0%{border-color:#ff0000;box-shadow:0 0 25px #ff0000;}
+            17%{border-color:#ffa500;box-shadow:0 0 25px #ffa500;}
+            33%{border-color:#ffff00;box-shadow:0 0 25px #ffff00;}
+            50%{border-color:#008000;box-shadow:0 0 25px #008000;}
+            67%{border-color:#0000ff;box-shadow:0 0 25px #0000ff;}
+            84%{border-color:#4b0082;box-shadow:0 0 25px #4b0082;}
+            100%{border-color:#ee82ee;box-shadow:0 0 25px #ee82ee;}
         }
 
-        .site-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #4b5563;
-            font-weight: 700;
+        .header-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:10px;
         }
 
-        /* Кнопка справки */
-        .info-btn {
-            background: #141417;
-            border: 1px solid #27272a;
-            color: #a1a1aa;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+        .site-title{
+            font-size:14px;
+            text-transform:uppercase;
+            letter-spacing:3px;
+            color:#4b5563;
+            font-weight:700;
         }
 
-        .info-btn:hover {
-            color: #ffffff;
-            border-color: #3f3f46;
-            background: #1f1f23;
+        .info-btn{
+            width:36px;
+            height:36px;
+
+            border:none;
+            border-radius:50%;
+
+            background:#141417;
+
+            color:#fff;
+
+            cursor:pointer;
+
+            font-size:20px;
+
+            transition:.18s;
+        }
+
+        .info-btn:hover{
+            background:#222228;
         }
 
         .info-btn:active {
             transform: scale(0.92);
         }
 
+                /* ===========================
+                 МЕНЮ ⋮
+        =========================== */
+
+        .menu-wrapper{
+            position:relative;
+        }
+
+        .menu-dropdown{
+
+            position:absolute;
+
+            top:44px;
+
+            right:0;
+
+            width:220px;
+
+            background:#111114;
+
+            border:1px solid #27272a;
+
+            border-radius:16px;
+
+            overflow:hidden;
+
+            opacity:0;
+
+            visibility:hidden;
+
+            transform:translateY(-8px);
+
+            transition:.18s;
+
+            box-shadow:0 15px 40px rgba(0,0,0,.55);
+
+            z-index:999;
+        }
+
+        .menu-dropdown.show{
+
+            opacity:1;
+
+            visibility:visible;
+
+            transform:translateY(0);
+
+        }
+
+        .menu-item{
+
+            width:100%;
+
+            background:none;
+
+            border:none;
+
+            color:#fff;
+
+            text-align:left;
+
+            padding:14px 16px;
+
+            font-size:15px;
+
+            cursor:pointer;
+
+            transition:.15s;
+
+        }
+
+        .menu-item:hover{
+
+            background:#1b1b20;
+
+        }
+
+        .menu-item:not(:last-child){
+
+            border-bottom:1px solid #202024;
+
+        }
+
+        .menu-item:active{
+
+            background:#26262d;
+
+        }
+
+        /* ===========================
+              МОДАЛЬНЫЕ ОКНА
+        =========================== */
+        /* ===========================
+        ИСТОРИЯ / СТАТИСТИКА
+=========================== */
+
+.history-list{
+    margin-top:12px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.history-item{
+    background:#141417;
+    border:1px solid #27272a;
+    border-radius:12px;
+    padding:12px 14px;
+    text-align:left;
+}
+
+.history-date{
+    color:#71717a;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.history-rarity{
+    font-weight:700;
+    font-size:15px;
+}
+
+.stats-grid{
+    display:grid;
+    gap:12px;
+    margin-top:10px;
+}
+
+.stat-card{
+    background:#141417;
+    border:1px solid #27272a;
+    border-radius:12px;
+    padding:14px;
+}
+
+.stat-title{
+    color:#71717a;
+    font-size:13px;
+}
+
+.stat-value{
+    margin-top:6px;
+    font-size:24px;
+    font-weight:700;
+}
         /* Быстрое модальное окно */
         .modal-overlay {
             position: fixed;
