@@ -466,12 +466,40 @@
     </style>
 </head>
 <body>
+<div class="container" id="main-container">
+ <div class="header-top">
+    <div class="site-title">
+        Станция "Годжо Сатору"
+    </div>
 
-    <div class="container" id="main-container">
-        <div class="header-top">
-            <div class="site-title">Редкость карточек</div>
-            <button class="info-btn" id="open-modal-btn" title="Шансы редкостей">?</button>
+    <div class="menu-wrapper">
+
+        <button
+            class="info-btn"
+            id="menu-btn"
+            title="Меню">
+            ⋮
+        </button>
+
+        <div class="menu-dropdown" id="menu-dropdown">
+
+            <button class="menu-item" id="rarity-btn">
+                📋 Редкость карточек
+            </button>
+
+            <button class="menu-item" id="history-btn">
+                📜 История
+            </button>
+
+            <button class="menu-item" id="stats-btn">
+                📊 Статистика
+            </button>
+
         </div>
+
+    </div>
+
+</div>
         
         <h1>Рандомный выбор редкости карточек</h1>
         
@@ -522,8 +550,61 @@
             </ul>
         </div>
     </div>
+<!-- История -->
+<div class="modal-overlay" id="history-modal">
+    <div class="modal-card">
+        <button class="modal-close" id="close-history">&times;</button>
 
+        <div class="modal-title">История</div>
+        <div class="modal-subtitle">
+            Последние открытия редкости
+        </div>
+
+        <div class="history-list" id="history-list"></div>
+    </div>
+</div>
+
+<!-- Статистика -->
+<div class="modal-overlay" id="stats-modal">
+    <div class="modal-card">
+        <button class="modal-close" id="close-stats">&times;</button>
+
+        <div class="modal-title">Статистика</div>
+        <div class="modal-subtitle">
+            Общая информация
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-title">Всего дней</div>
+                <div class="stat-value" id="stat-days">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Самая частая редкость</div>
+                <div class="stat-value" id="stat-common">—</div>
+            </div>
+
+        </div>
+    </div>
+</div>
     <script>
+        
+        const menuBtn = document.getElementById("menu-btn");
+const menuDropdown = document.getElementById("menu-dropdown");
+
+const rarityBtn = document.getElementById("rarity-btn");
+const historyBtn = document.getElementById("history-btn");
+const statsBtn = document.getElementById("stats-btn");
+
+const rarityModal = document.getElementById("modal-overlay");
+const historyModal = document.getElementById("history-modal");
+const statsModal = document.getElementById("stats-modal");
+
+const closeRarity = document.getElementById("close-modal-btn");
+const closeHistory = document.getElementById("close-history");
+const closeStats = document.getElementById("close-stats");
         const pool = {
             common: [
                 "Обычный дроп на сегодня. Базовый исход ⚪💤",
@@ -658,24 +739,49 @@
             }
         });
 
-        /* Скрипт управления модальным окном */
-        const modalOverlay = document.getElementById("modal-overlay");
-        const openModalBtn = document.getElementById("open-modal-btn");
-        const closeModalBtn = document.getElementById("close-modal-btn");
+// ===== Меню =====
 
-        openModalBtn.addEventListener("click", () => {
-            modalOverlay.classList.add("active");
-        });
+menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menuDropdown.classList.toggle("show");
+});
 
-        closeModalBtn.addEventListener("click", () => {
-            modalOverlay.classList.remove("active");
-        });
+document.addEventListener("click", (e) => {
+    if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+        menuDropdown.classList.remove("show");
+    }
+});
 
-        modalOverlay.addEventListener("click", (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.classList.remove("active");
-            }
-        });
+// ===== Открытие окон =====
+
+rarityBtn.addEventListener("click", () => {
+    rarityModal.classList.add("active");
+    menuDropdown.classList.remove("show");
+});
+
+historyBtn.addEventListener("click", () => {
+    historyModal.classList.add("active");
+    menuDropdown.classList.remove("show");
+});
+
+statsBtn.addEventListener("click", () => {
+    statsModal.classList.add("active");
+    menuDropdown.classList.remove("show");
+});
+
+// ===== Закрытие =====
+
+closeRarity.addEventListener("click", () => rarityModal.classList.remove("active"));
+closeHistory.addEventListener("click", () => historyModal.classList.remove("active"));
+closeStats.addEventListener("click", () => statsModal.classList.remove("active"));
+
+[rarityModal, historyModal, statsModal].forEach(modal => {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
+        }
+    });
+});
 
         setInterval(updateGachaSystem, 1000);
         updateGachaSystem();
