@@ -693,31 +693,9 @@ const closeStats = document.getElementById("close-stats");
             let phraseList = [];
             let cssClass = "";
 
-   if (chance < 1) {
-    rarity = "👑 ЛЕГЕНДАРНАЯ РЕДКОСТЬ 👑";
-    phraseList = pool.legendary;
-    cssClass = "legendary-style";
-
-} else if (chance < 6) {
-    rarity = "💥 МИФИЧЕСКАЯ РЕДКОСТЬ!!! 💥";
-    phraseList = pool.mythical;
-    cssClass = "mythical-style";
-
-} else if (chance < 31) {
-    rarity = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
-    phraseList = pool.epic;
-    cssClass = "epic-style";
-
-} else if (chance < 65) {
-    rarity = "🔷 РЕДКАЯ РЕДКОСТЬ 🔷";
-    phraseList = pool.rare;
-    cssClass = "rare-style";
-
-} else {
-    rarity = "⚪ ОБЫЧНАЯ РЕДКОСТЬ ⚪";
-    phraseList = pool.common;
-    cssClass = "common-style";
-}
+rarity = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
+phraseList = pool.epic;
+cssClass = "epic-style";
 
             const phraseIndex = chance % phraseList.length;
             let randomPhrase = phraseList[phraseIndex];
