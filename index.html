@@ -687,15 +687,87 @@ const closeStats = document.getElementById("close-stats");
                 tgkTimerBox.style.display = "none";
             }
         }
+function openAdminPanel() {
+    const rarity = prompt(
+`Админка
 
+1 - Легендарная
+2 - Мифическая
+3 - Эпическая
+4 - Редкая
+5 - Обычная
+
+Введите число:`);
+
+    if (!rarity) return;
+
+    switch (rarity) {
+        case "1":
+            rarityText = "👑 ЛЕГЕНДАРНАЯ РЕДКОСТЬ 👑";
+            phraseList = pool.legendary;
+            cssClass = "legendary-style";
+            break;
+
+        case "2":
+            rarityText = "💥 МИФИЧЕСКАЯ РЕДКОСТЬ!!! 💥";
+            phraseList = pool.mythical;
+            cssClass = "mythical-style";
+            break;
+
+        case "3":
+            rarityText = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
+            phraseList = pool.epic;
+            cssClass = "epic-style";
+            break;
+
+        case "4":
+            rarityText = "🔷 РЕДКАЯ РЕДКОСТЬ 🔷";
+            phraseList = pool.rare;
+            cssClass = "rare-style";
+            break;
+
+        case "5":
+            rarityText = "⚪ ОБЫЧНАЯ РЕДКОСТЬ ⚪";
+            phraseList = pool.common;
+            cssClass = "common-style";
+            break;
+
+        default:
+            return;
+    }
+
+    document.getElementById("main-container").className = cssClass;
+
+    document.getElementById("rarity").innerText = rarityText;
+
+    document.getElementById("daily-card").innerText =
+        phraseList[Math.floor(Math.random()*phraseList.length)];
+}
         function revealDailyCard(chance) {
             let rarity = "";
             let phraseList = [];
             let cssClass = "";
 
-rarity = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
-phraseList = pool.epic;
-cssClass = "epic-style";
+if (chance < 1) {
+    rarity = "👑 ЛЕГЕНДАРНАЯ РЕДКОСТЬ 👑";
+    phraseList = pool.legendary;
+    cssClass = "legendary-style";
+} else if (chance < 6) {
+    rarity = "💥 МИФИЧЕСКАЯ РЕДКОСТЬ!!! 💥";
+    phraseList = pool.mythical;
+    cssClass = "mythical-style";
+} else if (chance < 40) {
+    rarity = "⚪ ОБЫЧНАЯ РЕДКОСТЬ ⚪";
+    phraseList = pool.common;
+    cssClass = "common-style";
+} else if (chance < 65) {
+    rarity = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
+    phraseList = pool.epic;
+    cssClass = "epic-style";
+} else {
+    rarity = "🔷 РЕДКАЯ РЕДКОСТЬ 🔷";
+    phraseList = pool.rare;
+    cssClass = "rare-style";
 
             const phraseIndex = chance % phraseList.length;
             let randomPhrase = phraseList[phraseIndex];
@@ -770,7 +842,15 @@ closeStats.addEventListener("click", () => statsModal.classList.remove("active")
         }
     });
 });
+            
+const params = new URLSearchParams(location.search);
 
+if (
+    params.has("administrator") ||
+    params.has("awesome")
+) {
+    setTimeout(openAdminPanel, 300);
+}
         setInterval(updateGachaSystem, 1000);
         updateGachaSystem();
     </script>
