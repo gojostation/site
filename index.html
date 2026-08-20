@@ -994,4 +994,268 @@
         <h2>⚙️ Администратор <span class="badge">управление сайтом</span></h2>
         <div class="admin-grid">
             <div>
-                <div class="admin-group
+                <div class="admin-group">
+                    <label>Название карточки</label>
+                    <input type="text" id="adminCardName" placeholder="Годко тест" />
+                </div>
+                <div class="admin-group">
+                    <label>Редкость</label>
+                    <select id="adminCardRarity">
+                        <option value="Обычная">Обычная</option>
+                        <option value="Редкая">Редкая</option>
+                        <option value="Эпическая" selected>Эпическая</option>
+                        <option value="Мифическая">Мифическая</option>
+                        <option value="Легендарная">Легендарная</option>
+                        <option value="Эксклюзивная">Эксклюзивная</option>
+                    </select>
+                </div>
+                <div class="admin-group">
+                    <label>Прибытий подряд</label>
+                    <input type="number" id="adminStreak" min="0" value="47" />
+                </div>
+            </div>
+            <div>
+                <div class="admin-group">
+                    <label>Заморозка (доступно / макс)</label>
+                    <div style="display:flex; gap:6px;">
+                        <input type="number" id="adminFreezeAvailable" min="0" value="1" style="flex:1;" />
+                        <span style="color:#4a4a62; display:flex; align-items:center;">/</span>
+                        <input type="number" id="adminFreezeMax" min="1" value="1" style="flex:1;" />
+                    </div>
+                </div>
+                <div class="admin-group">
+                    <label>Статус</label>
+                    <select id="adminFreezeStatus">
+                        <option value="Доступна">Доступна</option>
+                        <option value="Использована">Использована</option>
+                        <option value="Недоступна">Недоступна</option>
+                    </select>
+                </div>
+                <div class="admin-group">
+                    <label>Фото</label>
+                    <div class="file-upload" id="adminFileUpload">
+                        <span class="icon">🖼️</span>
+                        <span class="text">Загрузить фото</span>
+                        <input type="file" accept="image/*" id="adminCardImage" />
+                    </div>
+                    <div id="adminImagePreview"></div>
+                </div>
+            </div>
+        </div>
+        <div class="admin-actions">
+            <button class="btn-admin btn-admin-primary" id="adminSaveBtn">💾 Сохранить</button>
+            <button class="btn-admin btn-admin-danger" id="adminResetBtn">🔄 Сброс</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // ─── ХРАНИЛИЩЕ ───
+    const STORAGE_KEY = 'gojo_station_data';
+
+    const defaultData = {
+        card: { name: 'Годко тест', rarity: 'Эпическая', date: '20.08.2026 • День 47', image: '' },
+        streak: { days: 47 },
+        freeze: { available: 1, max: 1, status: 'Доступна' },
+        rarities: [
+            { name: 'Обычная', percent: '60%' },
+            { name: 'Редкая', percent: '10%' },
+            { name: 'Эпическая', percent: '4%' },
+            { name: 'Мифическая', percent: '1%' },
+            { name: 'Легендарная', percent: '0.9%' },
+            { name: 'Эксклюзивная', percent: '??' },
+        ],
+    };
+
+    let appData = loadData();
+
+    function loadData() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                const data = JSON.parse(raw);
+                return { ...defaultData, ...data };
+            }
+        } catch (e) {}
+        return JSON.parse(JSON.stringify(defaultData));
+    }
+
+    function saveData(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function updateUI() {
+        document.getElementById('streakDays').textContent = appData.streak.days;
+        document.getElementById('freezeDisplay').textContent = `${appData.freeze.available} / ${appData.freeze.max}`;
+        document.getElementById('freezeStatus').textContent = appData.freeze.status;
+        document.getElementById('todayTime').textContent = '20:31';
+        document.getElementById('todayRarityValue').textContent = appData.card.rarity.toUpperCase() || 'ЭПИЧЕСКАЯ';
+        document.getElementById('cardName').textContent = appData.card.name || 'Годко тест';
+        document.getElementById('cardDate').textContent = appData.card.date || '20.08.2026 • День 47';
+
+        const list = document.getElementById('rarityList');
+        list.innerHTML = appData.rarities.map(r =>
+            `<div class="rarity-row">
+                <span class="name name-${r.name.toLowerCase()}">${r.name}</span>
+                <span class="percent percent-${r.name.toLowerCase()}">${r.percent}</span>
+            </div>`
+        ).join('');
+
+        // Фото
+        const preview = document.getElementById('cardPreview');
+        if (appData.card.image) {
+            preview.innerHTML = `<img src="${appData.card.image}" alt="карточка" />`;
+        } else {
+            preview.innerHTML = `<span class="placeholder">📸 карточка</span>`;
+        }
+
+        // Админка
+        document.getElementById('adminCardName').value = appData.card.name || '';
+        document.getElementById('adminCardRarity').value = appData.card.rarity || 'Эпическая';
+        document.getElementById('adminStreak').value = appData.streak.days || 47;
+        document.getElementById('adminFreezeAvailable').value = appData.freeze.available || 1;
+        document.getElementById('adminFreezeMax').value = appData.freeze.max || 1;
+        document.getElementById('adminFreezeStatus').value = appData.freeze.status || 'Доступна';
+
+        const adminPreview = document.getElementById('adminImagePreview');
+        if (appData.card.image) {
+            adminPreview.innerHTML = `<img src="${appData.card.image}" class="admin-preview" alt="превью" />`;
+        } else {
+            adminPreview.innerHTML = '';
+        }
+    }
+
+    // ─── ТАЙМЕР ───
+    let lastUpdate = 0;
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const arrivalEl = document.getElementById('arrivalTime');
+
+    function updateTimer(timestamp) {
+        if (timestamp - lastUpdate >= 1000) {
+            lastUpdate = timestamp;
+
+            const now = new Date();
+            let target = new Date(now);
+            target.setHours(20, 31, 0, 0);
+
+            if (now >= target) {
+                target.setDate(target.getDate() + 1);
+            }
+
+            let diff = Math.floor((target - now) / 1000);
+            if (diff < 0) diff = 0;
+
+            const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+
+            if (hoursEl.textContent !== h) hoursEl.textContent = h;
+            if (minutesEl.textContent !== m) minutesEl.textContent = m;
+            if (secondsEl.textContent !== s) secondsEl.textContent = s;
+            arrivalEl.textContent = '20:31';
+        }
+        requestAnimationFrame(updateTimer);
+    }
+
+    requestAnimationFrame(updateTimer);
+
+    // ─── ВРЕМЯ ───
+    function updateHeaderTime() {
+        const now = new Date();
+        document.getElementById('headerTime').textContent =
+            String(now.getHours()).padStart(2, '0') + ':' +
+            String(now.getMinutes()).padStart(2, '0');
+    }
+    updateHeaderTime();
+    setInterval(updateHeaderTime, 30000);
+
+    // ─── АДМИНКА ───
+    document.getElementById('adminToggle').addEventListener('click', function() {
+        const panel = document.getElementById('adminPanel');
+        panel.classList.toggle('open');
+        this.classList.toggle('active');
+        this.textContent = panel.classList.contains('open') ? '🔒' : '⚙️';
+    });
+
+    document.getElementById('adminSaveBtn').addEventListener('click', function() {
+        appData.card.name = document.getElementById('adminCardName').value.trim() || 'Годко тест';
+        appData.card.rarity = document.getElementById('adminCardRarity').value;
+        appData.card.date = document.getElementById('adminCardDate')?.value || '20.08.2026 • День 47';
+
+        const streak = parseInt(document.getElementById('adminStreak').value);
+        if (!isNaN(streak) && streak >= 0) appData.streak.days = streak;
+
+        const avail = parseInt(document.getElementById('adminFreezeAvailable').value);
+        const max = parseInt(document.getElementById('adminFreezeMax').value);
+        if (!isNaN(avail) && avail >= 0) appData.freeze.available = avail;
+        if (!isNaN(max) && max > 0) appData.freeze.max = max;
+        appData.freeze.status = document.getElementById('adminFreezeStatus').value;
+
+        saveData(appData);
+        updateUI();
+        showToast('✅ Сохранено!');
+    });
+
+    document.getElementById('adminFileUpload').addEventListener('click', function() {
+        document.getElementById('adminCardImage').click();
+    });
+
+    document.getElementById('adminCardImage').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            appData.card.image = event.target.result;
+            saveData(appData);
+            updateUI();
+            showToast('✅ Фото загружено!');
+        };
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('adminResetBtn').addEventListener('click', function() {
+        if (!confirm('Сбросить все данные?')) return;
+        appData = JSON.parse(JSON.stringify(defaultData));
+        saveData(appData);
+        updateUI();
+        showToast('🔄 Сброшено');
+    });
+
+    function showToast(message) {
+        const existing = document.querySelector('.admin-toast');
+        if (existing) existing.remove();
+
+        const toast = document.createElement('div');
+        toast.className = 'admin-toast';
+        Object.assign(toast.style, {
+            position: 'fixed',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'rgba(12,12,22,0.95)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            padding: '10px 24px',
+            borderRadius: '40px',
+            color: '#ffffff',
+            fontSize: '13px',
+            fontWeight: '500',
+            boxShadow: '0 8px 40px rgba(0,0,0,0.6)',
+            zIndex: '999',
+            animation: 'fadeUp 0.4s ease forwards',
+        });
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.remove(), 2500);
+    }
+
+    updateUI();
+</script>
+
+</body>
+</html>
