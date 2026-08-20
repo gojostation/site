@@ -148,10 +148,23 @@
         .right-col { display:flex; flex-direction:column; gap:12px; }
         .right-col .card { padding:14px 18px; flex:1; }
 
-        /* Блок Рандомный выбор (как на скриншоте) */
-        .rarity-block { display:flex; flex-direction:column; }
-        .rarity-header .card-label { font-size:13px; font-weight:700; margin-bottom:0; }
-        .rarity-today-value { font-size:36px; font-weight:800; color:#b7a9ff; letter-spacing:2px; margin-top:2px; }
+        /* Блок Рандомный выбор (исправлен) */
+        .rarity-block { display:flex; flex-direction:column; justify-content:flex-start; gap:0; }
+        .rarity-header-line {
+            display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0;
+        }
+        .rarity-header-line .title {
+            font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#b7a9ff;
+        }
+        .rarity-header-line .sub {
+            font-size:11px; color:#4a4a62;
+        }
+        .rarity-today-label {
+            margin-top:4px; color:#7a7a92; font-size:14px; font-weight:500;
+        }
+        .rarity-today-value {
+            font-size:38px; font-weight:800; color:#b7a9ff; letter-spacing:2px; margin-top:2px;
+        }
 
         /* Таймер до 0:00 */
         .timer-wrap { display:flex; gap:18px; justify-content:center; padding:6px 0; }
@@ -195,10 +208,10 @@
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 
         /* ─── АДАПТИВ ─── */
-        @media(max-width:850px){ .card-preview{min-height:80px;} .timer-unit .num{font-size:34px;} .series-number{font-size:44px;} .rarity-today-value{font-size:28px;} }
-        @media(max-width:550px){ .card{padding:12px 14px;} .series-number{font-size:38px;} .timer-unit .num{font-size:30px;} .timer-wrap{gap:10px;} .logo-text h1{font-size:20px;} .logo-icon{width:40px;height:40px;} .card-preview{min-height:60px;} .rarity-today-value{font-size:24px;} .today-name{font-size:16px;} .rarity-row .name{font-size:13px;min-width:60px;} .rarity-row .percent{font-size:13px;min-width:30px;} .rarity-row .diamond{font-size:12px;} }
+        @media(max-width:850px){ .card-preview{min-height:80px;} .timer-unit .num{font-size:34px;} .series-number{font-size:44px;} .rarity-today-value{font-size:30px;} }
+        @media(max-width:550px){ .card{padding:12px 14px;} .series-number{font-size:38px;} .timer-unit .num{font-size:30px;} .timer-wrap{gap:10px;} .logo-text h1{font-size:20px;} .logo-icon{width:40px;height:40px;} .card-preview{min-height:60px;} .rarity-today-value{font-size:26px;} .today-name{font-size:16px;} .rarity-row .name{font-size:13px;min-width:60px;} .rarity-row .percent{font-size:13px;min-width:30px;} .rarity-row .diamond{font-size:12px;} }
 
-        /* ─── АДМИН-ПАНЕЛЬ ─── (как была) ─── */
+        /* ─── АДМИН-ПАНЕЛЬ ─── */
         .admin-panel { display:none; margin-top:8px; background:rgba(12,12,22,0.95); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:14px 18px; animation:fadeUp 0.4s ease forwards; box-shadow:0 4px 25px rgba(0,0,0,0.4); flex-shrink:0; max-height:180px; overflow-y:auto; }
         .admin-panel.open { display:block; }
         .admin-panel h2 { font-size:13px; color:#fff; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
@@ -315,17 +328,15 @@
         <!-- ═══ ПРАВАЯ КОЛОНКА ═══ -->
         <div class="right-col">
 
-            <!-- РАНДОМНЫЙ ВЫБОР РЕДКОСТИ (как на скриншоте) -->
+            <!-- РАНДОМНЫЙ ВЫБОР РЕДКОСТИ (исправленный) -->
             <div class="card">
                 <div class="rarity-block">
-                    <div class="rarity-header">
-                        <span class="card-label" style="font-size:13px; font-weight:700;">РАНДОМНЫЙ ВЫБОР РЕДКОСТИ</span>
+                    <div class="rarity-header-line">
+                        <span class="title">РАНДОМНЫЙ ВЫБОР РЕДКОСТИ</span>
+                        <span class="sub">Ежедневно в 0:00</span>
                     </div>
-                    <div style="color:#4a4a62; font-size:11px; margin-top:-2px;">Ежедневно в 0:00</div>
-                    <div style="margin-top:6px; color:#7a7a92; font-size:13px; font-weight:500;">Сертификаты редкость</div>
-                    <div class="rarity-today-value" id="todayRarityValue" style="font-size:36px; font-weight:800; color:#b7a9ff; letter-spacing:2px; margin-top:2px;">
-                        ЭПИЧЕСКАЯ
-                    </div>
+                    <div class="rarity-today-label">Сегодняшняя редкость</div>
+                    <div class="rarity-today-value" id="todayRarityValue">ЭПИЧЕСКАЯ</div>
                 </div>
             </div>
 
