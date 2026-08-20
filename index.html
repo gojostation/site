@@ -3,856 +3,527 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
-    
-    <title>Станция "Годжо Сатору" — v2.33</title>
-
+    <title>GOJO STATION</title>
     <style>
+        /* ─── СБРОС ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
         body {
-            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
-            background:#000;
-            color:#fff;
-            text-align:center;
-            padding:20px;
-            margin:0;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            min-height:100vh;
-            box-sizing:border-box;
-        }
-
-        .container{
-            position:relative;
-            max-width:480px;
-            width:100%;
-            background:#09090b;
-            padding:40px 25px;
-            border-radius:24px;
-            border:1px solid #1f1f23;
-            box-shadow:0 20px 40px rgba(0,0,0,.9);
-            transition:.3s;
-        }
-
-        .container-shuffling{
-            animation:glow-wave 1.2s cubic-bezier(.4,0,.2,1) infinite;
-        }
-
-        @keyframes glow-wave{
-            0%{
-                box-shadow:0 0 0 0 rgba(255,255,255,.3),
-                0 20px 40px rgba(0,0,0,.9);
-            }
-
-            50%{
-                box-shadow:0 0 0 25px rgba(255,255,255,0),
-                0 20px 40px rgba(0,0,0,.9);
-            }
-
-            100%{
-                box-shadow:0 0 0 0 rgba(255,255,255,0),
-                0 20px 40px rgba(0,0,0,.9);
-            }
-        }
-
-        .awesome-rainbow{
-            animation:rainbow-glow 2s linear infinite!important;
-        }
-
-        @keyframes rainbow-glow{
-            0%{border-color:#ff0000;box-shadow:0 0 25px #ff0000;}
-            17%{border-color:#ffa500;box-shadow:0 0 25px #ffa500;}
-            33%{border-color:#ffff00;box-shadow:0 0 25px #ffff00;}
-            50%{border-color:#008000;box-shadow:0 0 25px #008000;}
-            67%{border-color:#0000ff;box-shadow:0 0 25px #0000ff;}
-            84%{border-color:#4b0082;box-shadow:0 0 25px #4b0082;}
-            100%{border-color:#ee82ee;box-shadow:0 0 25px #ee82ee;}
-        }
-
-        .header-top{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:10px;
-        }
-
-        .site-title{
-            font-size:14px;
-            text-transform:uppercase;
-            letter-spacing:3px;
-            color:#4b5563;
-            font-weight:700;
-        }
-
-        .info-btn{
-            width:36px;
-            height:36px;
-
-            border:none;
-            border-radius:50%;
-
-            background:#141417;
-
-            color:#fff;
-
-            cursor:pointer;
-
-            font-size:20px;
-
-            transition:.18s;
-        }
-
-        .info-btn:hover{
-            background:#222228;
-        }
-
-        .info-btn:active {
-            transform: scale(0.92);
-        }
-
-                /* ===========================
-                 МЕНЮ ⋮
-        =========================== */
-
-        .menu-wrapper{
-            position:relative;
-        }
-
-        .menu-dropdown{
-
-            position:absolute;
-
-            top:44px;
-
-            right:0;
-
-            width:220px;
-
-            background:#111114;
-
-            border:1px solid #27272a;
-
-            border-radius:16px;
-
-            overflow:hidden;
-
-            opacity:0;
-
-            visibility:hidden;
-
-            transform:translateY(-8px);
-
-            transition:.18s;
-
-            box-shadow:0 15px 40px rgba(0,0,0,.55);
-
-            z-index:999;
-        }
-
-        .menu-dropdown.show{
-
-            opacity:1;
-
-            visibility:visible;
-
-            transform:translateY(0);
-
-        }
-
-        .menu-item{
-
-            width:100%;
-
-            background:none;
-
-            border:none;
-
-            color:#fff;
-
-            text-align:left;
-
-            padding:14px 16px;
-
-            font-size:15px;
-
-            cursor:pointer;
-
-            transition:.15s;
-
-        }
-
-        .menu-item:hover{
-
-            background:#1b1b20;
-
-        }
-
-        .menu-item:not(:last-child){
-
-            border-bottom:1px solid #202024;
-
-        }
-
-        .menu-item:active{
-
-            background:#26262d;
-
-        }
-
-        /* ===========================
-              МОДАЛЬНЫЕ ОКНА
-        =========================== */
-        /* ===========================
-        ИСТОРИЯ / СТАТИСТИКА
-=========================== */
-
-.history-list{
-    margin-top:12px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.history-item{
-    background:#141417;
-    border:1px solid #27272a;
-    border-radius:12px;
-    padding:12px 14px;
-    text-align:left;
-}
-
-.history-date{
-    color:#71717a;
-    font-size:13px;
-    margin-bottom:4px;
-}
-
-.history-rarity{
-    font-weight:700;
-    font-size:15px;
-}
-
-.stats-grid{
-    display:grid;
-    gap:12px;
-    margin-top:10px;
-}
-
-.stat-card{
-    background:#141417;
-    border:1px solid #27272a;
-    border-radius:12px;
-    padding:14px;
-}
-
-.stat-title{
-    color:#71717a;
-    font-size:13px;
-}
-
-.stat-value{
-    margin-top:6px;
-    font-size:24px;
-    font-weight:700;
-}
-        /* Быстрое модальное окно */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(6px);
+            background: #0a0a0f;
+            color: #e8e4f0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
+            padding: 30px 16px;
+            background-image:
+                radial-gradient(circle at 20% 20%, #1a1040 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, #10082a 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0f 0%, #0f0d1a 100%);
+        }
+
+        .container {
+            max-width: 680px;
+            width: 100%;
+        }
+
+        /* ─── ЛОГОТИП ─── */
+        .logo {
+            display: flex;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 32px;
+            animation: fadeDown 0.8s ease;
+        }
+
+        .logo-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(145deg, #7a5cff, #4a2fc0);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 0 40px rgba(122, 92, 255, 0.25);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .logo-icon:hover {
+            transform: scale(1.05) rotate(-4deg);
+            box-shadow: 0 0 60px rgba(122, 92, 255, 0.45);
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #c4b5ff, #7a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(122, 92, 255, 0.15);
+        }
+
+        .logo h1 small {
+            font-size: 14px;
+            font-weight: 400;
+            -webkit-text-fill-color: #6a5f8a;
+            display: block;
+            letter-spacing: 4px;
+            margin-top: -2px;
+        }
+
+        /* ─── КАРТОЧКИ ─── */
+        .card {
+            background: rgba(18, 15, 35, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(122, 92, 255, 0.12);
+            border-radius: 28px;
+            padding: 24px 26px;
+            margin-bottom: 18px;
+            transition: all 0.35s ease;
+            animation: fadeUp 0.7s ease forwards;
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
-            will-change: opacity, visibility;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .card:hover {
+            border-color: rgba(122, 92, 255, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
         }
 
-        .modal-card {
-            background: #0d0d11;
-            border: 1px solid #27272a;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 380px;
-            width: 90%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
-            position: relative;
-            transform: translateY(10px);
-            transition: transform 0.15s ease-out;
-            will-change: transform;
-            text-align: left;
-        }
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.15s; }
+        .card:nth-child(3) { animation-delay: 0.25s; }
+        .card:nth-child(4) { animation-delay: 0.35s; }
+        .card:nth-child(5) { animation-delay: 0.45s; }
+        .card:nth-child(6) { animation-delay: 0.55s; }
+        .card:nth-child(7) { animation-delay: 0.65s; }
 
-        .modal-overlay.active .modal-card {
-            transform: translateY(0);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 18px;
-            background: none;
-            border: none;
-            color: #71717a;
-            font-size: 22px;
-            cursor: pointer;
-            transition: color 0.15s ease;
-        }
-
-        .modal-close:hover {
-            color: #ffffff;
-        }
-
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-
-        .modal-subtitle {
+        .card-title {
             font-size: 13px;
-            color: #71717a;
-            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #7a6b9e;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
-        .rarity-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        /* ─── ТЕКУЩАЯ СЕРИЯ ─── */
+        .series-display {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .series-number {
+            font-size: 52px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd966, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .series-label {
+            font-size: 18px;
+            color: #b0a6cc;
+            font-weight: 500;
+        }
+
+        .series-badge {
+            margin-left: auto;
+            background: rgba(122, 92, 255, 0.15);
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-size: 14px;
+            border: 1px solid rgba(122, 92, 255, 0.2);
+            color: #b7a9ff;
+        }
+
+        /* ─── ЗАМОРОЗКА ─── */
+        .freeze-grid {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .freeze-big {
+            font-size: 36px;
+            font-weight: 700;
+            color: #6dd5ed;
+        }
+
+        .freeze-sub {
+            color: #8f84b0;
+            font-size: 15px;
+        }
+
+        .freeze-badge {
+            background: #1a2840;
+            padding: 4px 16px;
+            border-radius: 40px;
+            border: 1px solid #2a4a6a;
+            color: #6dd5ed;
+            font-size: 14px;
+            margin-left: auto;
+        }
+
+        /* ─── ДОСТИЖЕНИЯ ─── */
+        .achieve-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .achieve-progress {
+            font-size: 28px;
+            font-weight: 700;
+            color: #c4b5ff;
+        }
+
+        .achieve-progress span {
+            color: #5a4f7a;
+            font-weight: 400;
+        }
+
+        .achieve-last {
+            color: #8f84b0;
+            font-size: 15px;
+        }
+
+        .achieve-link {
+            margin-left: auto;
+            color: #7a5cff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .achieve-link:hover {
+            border-bottom-color: #7a5cff;
+            color: #a994ff;
+        }
+
+        /* ─── РЕДКОСТИ ─── */
+        .rarity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
         }
 
         .rarity-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #18181b;
-            font-size: 15px;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .rarity-item:last-child {
-            border-bottom: none;
+        .rarity-item .name {
+            color: #b0a6cc;
         }
 
-        .rarity-name {
+        .rarity-item .perc {
+            font-weight: 600;
+        }
+
+        .rarity-item .perc.common { color: #8f8f9f; }
+        .rarity-item .perc.uncommon { color: #6db86d; }
+        .rarity-item .perc.rare { color: #4a8fcf; }
+        .rarity-item .perc.epic { color: #b77aff; }
+        .rarity-item .perc.legendary { color: #ffb347; }
+        .rarity-item .perc.exclusive { color: #ff6b8a; }
+
+        /* ─── ТАЙМЕР ─── */
+        .timer-display {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
+            gap: 20px;
+            justify-content: center;
+            padding: 8px 0;
         }
 
-        .rarity-chance {
-            font-family: monospace;
-            font-weight: bold;
+        .timer-unit {
+            text-align: center;
+        }
+
+        .timer-unit .num {
+            font-size: 40px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c4b5ff, #7a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .timer-unit .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #5a4f7a;
+            margin-top: 2px;
+        }
+
+        .timer-arrival {
+            text-align: center;
+            color: #8f84b0;
             font-size: 15px;
-            background: #141417;
-            padding: 2px 8px;
-            border-radius: 6px;
-            border: 1px solid #27272a;
-        }
-
-        .color-common { color: #a1a1aa; }
-        .color-rare { color: #3b82f6; }
-        .color-epic { color: #a78bfa; }
-        .color-mythical { color: #ef4444; }
-        .color-legendary { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
-        
-        h1 { 
-            color: #ffffff; 
-            margin-bottom: 35px; 
-            font-size: 26px; 
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .site-timer-container {
-            font-size: 18px;
-            font-weight: bold;
-            color: #a1a1aa;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 12px;
-            background: #141417;
-            border: 1px solid #27272a;
-        }
-        .site-timer-clock {
-            color: #ffffff;
-            font-family: monospace;
-            font-size: 24px;
-            display: block;
-            margin-top: 5px;
-        }
-
-        .tgk-timer-container {
-            font-size: 16px;
-            font-weight: 600;
-            color: #a1a1aa;
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 10px;
-            background: #09090b;
-            border: 1px dashed #27272a;
-        }
-        .tgk-timer-clock {
-            color: #ffffff;
-            font-family: monospace;
-            font-size: 20px;
-            display: block;
             margin-top: 4px;
         }
 
-        #card-display {
-            margin-top: 20px;
-            padding: 30px 20px;
-            border-radius: 16px;
-            background: #020202;
-            min-height: 110px;
+        /* ─── ГОДКО НА ЛЬВЕ ─── */
+        .post-preview {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            border: 2px solid #18181b;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
-        .rarity-tag {
+        .post-preview .date {
+            color: #8f84b0;
+            font-size: 14px;
+        }
+
+        .post-preview .tg-link {
+            color: #7a5cff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(122, 92, 255, 0.2);
+        }
+
+        .post-preview .tg-link:hover {
+            background: rgba(122, 92, 255, 0.12);
+            border-color: #7a5cff;
+        }
+
+        /* ─── НИЖНИЙ БАННЕР ─── */
+        .cta-banner {
+            background: linear-gradient(145deg, rgba(122, 92, 255, 0.08), rgba(74, 47, 192, 0.05));
+            border: 1px solid rgba(122, 92, 255, 0.15);
+            border-radius: 28px;
+            padding: 22px 26px;
+            text-align: center;
+            transition: 0.4s ease;
+            animation: fadeUp 0.7s ease 0.75s forwards;
+            opacity: 0;
+        }
+
+        .cta-banner:hover {
+            border-color: rgba(122, 92, 255, 0.35);
+            box-shadow: 0 0 50px rgba(122, 92, 255, 0.05);
+        }
+
+        .cta-banner h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .cta-banner .cta-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 40px;
+            background: linear-gradient(145deg, #7a5cff, #4a2fc0);
+            border-radius: 60px;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(122, 92, 255, 0.25);
+        }
+
+        .cta-banner .cta-link:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 50px rgba(122, 92, 255, 0.4);
+        }
+
+        /* ─── СЕГОДНЯШНЯЯ КАРТОЧКА ─── */
+        .today-time {
+            font-size: 28px;
+            font-weight: 700;
+            color: #c4b5ff;
+        }
+
+        .today-sub {
+            color: #8f84b0;
             font-size: 15px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            margin-left: 12px;
         }
 
-        .comment-text { 
-            font-size: 18px; 
-            color: #a1a1aa; 
+        /* ─── АНИМАЦИИ ─── */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Стили редкостей */
-        .common-style { border-color: #3f3f46 !important; box-shadow: 0 0 15px rgba(63,63,70,0.3); }
-        .common-style .rarity-tag { color: #a1a1aa; }
-        
-        .rare-style { border-color: #2563eb !important; box-shadow: 0 0 20px rgba(37,99,235,0.4); }
-        .rare-style .rarity-tag { color: #3b82f6; }
-        
-        .epic-style { border-color: #7c3aed !important; box-shadow: 0 0 20px rgba(124,58,237,0.5); }
-        .epic-style .rarity-tag { color: #a78bfa; }
-        
-        .mythical-style { border-color: #dc2626 !important; box-shadow: 0 0 25px rgba(220,38,38,0.5); }
-        .mythical-style .rarity-tag { color: #ef4444; }
 
-        .legendary-style { 
-            border-color: #d97706 !important; 
-            box-shadow: 0 0 35px rgba(217,119,6,0.8); 
-            animation: pulse 1.2s infinite;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .legendary-style .rarity-tag { color: #fbbf24; text-shadow: 0 0 15px rgba(251,191,36,0.9); }
-        .legendary-style .comment-text { color: #fef08a; font-weight: bold; }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 20px rgba(217,119,6,0.5); }
-            50% { box-shadow: 0 0 40px rgba(217,119,6,0.9); }
-            100% { box-shadow: 0 0 20px rgba(217,119,6,0.5); }
+        /* ─── АДАПТИВ ─── */
+        @media (max-width: 500px) {
+            .card { padding: 18px 18px; }
+            .series-number { font-size: 38px; }
+            .timer-unit .num { font-size: 30px; }
+            .rarity-grid { grid-template-columns: 1fr; }
+            .logo h1 { font-size: 24px; }
+            .logo-icon { width: 44px; height: 44px; font-size: 22px; }
+            .freeze-big { font-size: 28px; }
+            .achieve-progress { font-size: 22px; }
+            .cta-banner .cta-link { padding: 10px 28px; font-size: 15px; }
+            .series-badge { margin-left: 0; }
+            .freeze-badge { margin-left: 0; }
+            .achieve-link { margin-left: 0; }
+        }
+
+        @media (max-width: 380px) {
+            .timer-display { gap: 10px; }
+            .timer-unit .num { font-size: 24px; }
         }
     </style>
 </head>
 <body>
-<div class="container" id="main-container">
- <div class="header-top">
-    <div class="site-title">
-        Станция "Годжо Сатору"
-    </div>
+    <div class="container">
 
-    <div class="menu-wrapper">
-
-        <button
-            class="info-btn"
-            id="menu-btn"
-            title="Меню">
-            ⋮
-        </button>
-
-        <div class="menu-dropdown" id="menu-dropdown">
-
-            <button class="menu-item" id="rarity-btn">
-                📋 Редкость карточек
-            </button>
-
-            <button class="menu-item" id="history-btn">
-                📜 История
-            </button>
-
-            <button class="menu-item" id="stats-btn">
-                📊 Статистика
-            </button>
-
+        <!-- ЛОГОТИП -->
+        <div class="logo">
+            <div class="logo-icon">GO</div>
+            <h1>GOJO STATION <small>СТАНЦИЯ ГОДКО</small></h1>
         </div>
 
-    </div>
-
-</div>
-        
-        <h1>Рандомный выбор редкости карточек</h1>
-        
-        <div class="site-timer-container">
-            ⏳ До раскрытия редкости дня:
-            <span class="site-timer-clock" id="countdown-midnight">00:00:00</span>
-        </div>
-
-        <div id="card-display">
-            <div class="rarity-tag" id="rarity-text"></div>
-            <div class="comment-text" id="comment-text"></div>
-            
-            <div class="tgk-timer-container" id="tgk-timer-box" style="display: none;">
-                ⏳ Карточка будет в ТГК через:
-                <span class="tgk-timer-clock" id="countdown-tgk">00:00:00</span>
+        <!-- 1. ТЕКУЩАЯ СЕРИЯ -->
+        <div class="card">
+            <div class="card-title">✦ Текущая серия</div>
+            <div class="series-display">
+                <span class="series-number" id="streakDays">47</span>
+                <span class="series-label">дней подряд</span>
+                <span class="series-badge">🔥 рекорд</span>
             </div>
         </div>
-    </div>
 
-    <!-- Модальное окно шансов -->
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal-card">
-            <button class="modal-close" id="close-modal-btn">&times;</button>
-            <div class="modal-title">Вероятности генерации</div>
-            <div class="modal-subtitle">Шансы выпадения редкостей в системе:</div>
-            
-            <ul class="rarity-list">
-                <li class="rarity-item color-common">
-                    <span class="rarity-name">⚪ Обычная</span>
-                    <span class="rarity-chance">35%</span>
-                </li>
-                <li class="rarity-item color-rare">
-                    <span class="rarity-name">🔷 Редкая</span>
-                    <span class="rarity-chance">34%</span>
-                </li>
-                <li class="rarity-item color-epic">
-                    <span class="rarity-name">✨ Эпическая</span>
-                    <span class="rarity-chance">25%</span>
-                </li>
-                <li class="rarity-item color-mythical">
-                    <span class="rarity-name">💥 Мифическая</span>
-                    <span class="rarity-chance">5%</span>
-                </li>
-                <li class="rarity-item color-legendary">
-                    <span class="rarity-name">👑 Легендарная</span>
-                    <span class="rarity-chance">1%</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-<!-- История -->
-<div class="modal-overlay" id="history-modal">
-    <div class="modal-card">
-        <button class="modal-close" id="close-history">&times;</button>
-
-        <div class="modal-title">История</div>
-        <div class="modal-subtitle">
-            Последние открытия редкости
+        <!-- 2. ЗАМОРОЗКА -->
+        <div class="card">
+            <div class="card-title">❄️ Заморозка</div>
+            <div class="freeze-grid">
+                <span class="freeze-big">1 / 1</span>
+                <span class="freeze-sub">Доступна</span>
+                <span class="freeze-badge">⏳ через 15 прибытий</span>
+            </div>
         </div>
 
-        <div class="history-list" id="history-list"></div>
-    </div>
-</div>
-
-<!-- Статистика -->
-<div class="modal-overlay" id="stats-modal">
-    <div class="modal-card">
-        <button class="modal-close" id="close-stats">&times;</button>
-
-        <div class="modal-title">Статистика</div>
-        <div class="modal-subtitle">
-            Общая информация
+        <!-- 3. ДОСТИЖЕНИЯ -->
+        <div class="card">
+            <div class="card-title">🏆 Достижения</div>
+            <div class="achieve-row">
+                <span class="achieve-progress">— <span>/ 50</span></span>
+                <span class="achieve-last">Последнее: —</span>
+                <a href="#" class="achieve-link">Все достижения →</a>
+            </div>
         </div>
 
-        <div class="stats-grid">
+        <!-- 4. РЕДКОСТИ -->
+        <div class="card">
+            <div class="card-title">🎲 Рандомный выбор редкости</div>
+            <div style="color:#8f84b0; font-size:14px; margin-bottom:14px;">Ежедневно в 00:00</div>
+            <div class="rarity-grid">
+                <div class="rarity-item"><span class="name">Обычная</span><span class="perc common">60%</span></div>
+                <div class="rarity-item"><span class="name">Необычная</span><span class="perc uncommon">25%</span></div>
+                <div class="rarity-item"><span class="name">Редкая</span><span class="perc rare">10%</span></div>
+                <div class="rarity-item"><span class="name">Эпическая</span><span class="perc epic">4%</span></div>
+                <div class="rarity-item"><span class="name">Легендарная</span><span class="perc legendary">0.9%</span></div>
+                <div class="rarity-item"><span class="name">Эксклюзивная</span><span class="perc exclusive">0.1%</span></div>
+            </div>
+        </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Всего дней</div>
-                <div class="stat-value" id="stat-days">0</div>
+        <!-- 5. СЕГОДНЯШНЯЯ КАРТОЧКА + ТАЙМЕР -->
+        <div class="card">
+            <div class="card-title">🕐 Сегодняшняя карточка</div>
+            <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+                <span class="today-time">20:31</span>
+                <span class="today-sub">Годко прибудет в 20:31</span>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-title">Самая частая редкость</div>
-                <div class="stat-value" id="stat-common">—</div>
+            <div class="timer-display" id="timer">
+                <div class="timer-unit"><div class="num" id="hours">05</div><div class="label">Часов</div></div>
+                <div class="timer-unit"><div class="num" id="minutes">38</div><div class="label">Минут</div></div>
+                <div class="timer-unit"><div class="num" id="seconds">12</div><div class="label">Секунд</div></div>
             </div>
-
+            <div class="timer-arrival">До следующего прибытия</div>
         </div>
+
+        <!-- 6. ГОДКО НА ЛЬВЕ -->
+        <div class="card">
+            <div class="card-title">🦁 Годко на льве</div>
+            <div class="post-preview">
+                <span style="font-weight:600;">Годко на льве</span>
+                <span class="date">18.05.2025 • День 47</span>
+                <a href="#" class="tg-link">Смотреть в Telegram →</a>
+            </div>
+        </div>
+
+        <!-- 7. CTA БАННЕР -->
+        <div class="cta-banner">
+            <h3>📩 Получай карточку каждый день в 20:31</h3>
+            <a href="#" class="cta-link">Перейти в Telegram →</a>
+        </div>
+
     </div>
-</div>
+
     <script>
-        
-        const menuBtn = document.getElementById("menu-btn");
-const menuDropdown = document.getElementById("menu-dropdown");
+        (function() {
+            // ─── ТАЙМЕР ДО 20:31 ───
+            function updateTimer() {
+                const now = new Date();
+                let target = new Date(now);
+                target.setHours(20, 31, 0, 0);
 
-const rarityBtn = document.getElementById("rarity-btn");
-const historyBtn = document.getElementById("history-btn");
-const statsBtn = document.getElementById("stats-btn");
+                // если уже прошло 20:31 — берём завтра
+                if (now >= target) {
+                    target.setDate(target.getDate() + 1);
+                }
 
-const rarityModal = document.getElementById("modal-overlay");
-const historyModal = document.getElementById("history-modal");
-const statsModal = document.getElementById("stats-modal");
+                let diff = Math.floor((target - now) / 1000);
+                if (diff < 0) diff = 0;
 
-const closeRarity = document.getElementById("close-modal-btn");
-const closeHistory = document.getElementById("close-history");
-const closeStats = document.getElementById("close-stats");
-        const pool = {
-            common: [
-                "Обычный дроп на сегодня. Базовый исход ⚪💤",
-                "Дефолтный выбор системы. Самый частый вариант ⚪🌫️",
-                "На сегодня выпал стандартный скромный исход ⚪🔄"
-            ],
-            rare: [
-                "Хороший улов на сегодня, довольно интересный выбор 🔷💎",
-                "Редкий результат. Отличный показатель для сегодняшнего дня 🔷😎",
-                "Показатели удачи растут. Уверенный синий дроп 🔷⚡"
-            ],
-            epic: [
-                "Высокий результат. Сегодняшний день приносит ЭПИК 🔥",
-                "Фиолетовое свечение. Нереальный уровень редкости на сегодня ✨🌌",
-                "Превосходный выбор системы. Отличный дроп в карточке ✨🌟"
-            ],
-            mythical: [
-                "Выпал МИФИЧЕСКИЙ ДРОП! Крайне редкое событие в канале 💥💎",
-                "Абсолютно топовый результат. На сегодня выпал редчайший Мифик 💥🔥",
-                "Шансы были крайне малы, но система выдала Мифик 💥🏆"
-            ],
-            legendary: [
-                "ГЛАВНЫЙ СУПЕР-ПРИЗ! Сгенерирована ЛЕГЕНДАРНАЯ РЕДКОСТЬ 👑✨",
-                "Абсолютный максимум. Самый редкий исход во всей системе 👑🏆",
-                "Исторический день в канале. Выпала чистая Легендарка 👑🔥"
-            ]
-        };
+                const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+                const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+                const s = String(diff % 60).padStart(2, '0');
 
-        function getSeedBasedRandom() {
-            const today = new Date();
-            const seedString = "" + today.getFullYear() + today.getMonth() + today.getDate();
-            let hash = 0;
-            for (let i = 0; i < seedString.length; i++) {
-                hash = seedString.charCodeAt(i) + ((hash << 5) - hash);
+                document.getElementById('hours').textContent = h;
+                document.getElementById('minutes').textContent = m;
+                document.getElementById('seconds').textContent = s;
             }
-            return Math.abs(hash) % 100;
-        }
 
-        function formatTime(ms) {
-            const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((ms / (1000 * 60)) % 60);
-            const seconds = Math.floor((ms / 1000) % 60);
-            return (hours < 10 ? "0" + hours : hours) + ":" + 
-                   (minutes < 10 ? "0" + minutes : minutes) + ":" + 
-                   (seconds < 10 ? "0" + seconds : seconds);
-        }
+            updateTimer();
+            setInterval(updateTimer, 1000);
 
-        function updateGachaSystem() {
-            const container = document.getElementById("main-container");
-            const countdownMidnight = document.getElementById("countdown-midnight");
-            const countdownTgk = document.getElementById("countdown-tgk");
-            const tgkTimerBox = document.getElementById("tgk-timer-box");
+            // ─── СТРИК (можно обновлять извне) ───
+            // По умолчанию 47, как на макете
+            // Можно менять через localStorage или подгружать с бэка
+            const streakEl = document.getElementById('streakDays');
+            // оставляем 47, либо можно захардкодить динамику
+            // streakEl.textContent = 47;
 
-            const now = new Date();
-
-            const midnight = new Date();
-            midnight.setHours(24, 0, 0, 0); 
-            const diffMidnight = midnight - now;
-            countdownMidnight.innerText = formatTime(diffMidnight);
-
-            const chance = getSeedBasedRandom();
-            revealDailyCard(chance);
-            
-            container.classList.remove("container-shuffling");
-
-            const targetTgk = new Date();
-            targetTgk.setHours(20, 31, 0, 0);
-
-            if (now < targetTgk) {
-                tgkTimerBox.style.display = "block";
-                const diffTgk = targetTgk - now;
-                countdownTgk.innerText = formatTime(diffTgk);
-            } else {
-                tgkTimerBox.style.display = "none";
-            }
-        }
-function openAdminPanel() {
-    const rarity = prompt(
-`Админка
-
-1 - Легендарная
-2 - Мифическая
-3 - Эпическая
-4 - Редкая
-5 - Обычная
-
-Введите число:`);
-
-    if (!rarity) return;
-
-    switch (rarity) {
-        case "1":
-            rarityText = "👑 ЛЕГЕНДАРНАЯ РЕДКОСТЬ 👑";
-            phraseList = pool.legendary;
-            cssClass = "legendary-style";
-            break;
-
-        case "2":
-            rarityText = "💥 МИФИЧЕСКАЯ РЕДКОСТЬ!!! 💥";
-            phraseList = pool.mythical;
-            cssClass = "mythical-style";
-            break;
-
-        case "3":
-            rarityText = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
-            phraseList = pool.epic;
-            cssClass = "epic-style";
-            break;
-
-        case "4":
-            rarityText = "🔷 РЕДКАЯ РЕДКОСТЬ 🔷";
-            phraseList = pool.rare;
-            cssClass = "rare-style";
-            break;
-
-        case "5":
-            rarityText = "⚪ ОБЫЧНАЯ РЕДКОСТЬ ⚪";
-            phraseList = pool.common;
-            cssClass = "common-style";
-            break;
-
-        default:
-            return;
-    }
-
-    document.getElementById("main-container").className = cssClass;
-
-    document.getElementById("rarity").innerText = rarityText;
-
-    document.getElementById("daily-card").innerText =
-        phraseList[Math.floor(Math.random()*phraseList.length)];
-}
-        function revealDailyCard(chance) {
-            let rarity = "";
-            let phraseList = [];
-            let cssClass = "";
-
-if (chance < 1) {
-    rarity = "👑 ЛЕГЕНДАРНАЯ РЕДКОСТЬ 👑";
-    phraseList = pool.legendary;
-    cssClass = "legendary-style";
-} else if (chance < 6) {
-    rarity = "💥 МИФИЧЕСКАЯ РЕДКОСТЬ!!! 💥";
-    phraseList = pool.mythical;
-    cssClass = "mythical-style";
-} else if (chance < 40) {
-    rarity = "⚪ ОБЫЧНАЯ РЕДКОСТЬ ⚪";
-    phraseList = pool.common;
-    cssClass = "common-style";
-} else if (chance < 65) {
-    rarity = "✨ ЭПИЧЕСКАЯ РЕДКОСТЬ ✨";
-    phraseList = pool.epic;
-    cssClass = "epic-style";
-} else {
-    rarity = "🔷 РЕДКАЯ РЕДКОСТЬ 🔷";
-    phraseList = pool.rare;
-    cssClass = "rare-style";
-
-            const phraseIndex = chance % phraseList.length;
-            let randomPhrase = phraseList[phraseIndex];
-
-            let display = document.getElementById("card-display");
-            
-            if (!document.getElementById("main-container").classList.contains("awesome-rainbow")) {
-                display.className = "";
-                display.classList.add(cssClass);
-            }
-            
-            document.getElementById("rarity-text").innerText = rarity;
-            document.getElementById("comment-text").innerText = randomPhrase;
-        }
-
-        let inputSecret = "";
-        window.addEventListener("keydown", function(e) {
-            inputSecret += e.key.toLowerCase();
-            if (inputSecret.length > 7) inputSecret = inputSecret.slice(-7);
-            
-            if (inputSecret === "awesome") {
-                const container = document.getElementById("main-container");
-                const display = document.getElementById("card-display");
-                
-                container.className = "container awesome-rainbow";
-                display.className = "";
-                
-                alert("🌈 ПАСХАЛКА АКТИВИРОВАНА! Режим Awesome включен!");
-            }
-        });
-
-// ===== Меню =====
-
-menuBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    menuDropdown.classList.toggle("show");
-});
-
-document.addEventListener("click", (e) => {
-    if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
-        menuDropdown.classList.remove("show");
-    }
-});
-
-// ===== Открытие окон =====
-
-rarityBtn.addEventListener("click", () => {
-    rarityModal.classList.add("active");
-    menuDropdown.classList.remove("show");
-});
-
-historyBtn.addEventListener("click", () => {
-    historyModal.classList.add("active");
-    menuDropdown.classList.remove("show");
-});
-
-statsBtn.addEventListener("click", () => {
-    statsModal.classList.add("active");
-    menuDropdown.classList.remove("show");
-});
-
-// ===== Закрытие =====
-
-closeRarity.addEventListener("click", () => rarityModal.classList.remove("active"));
-closeHistory.addEventListener("click", () => historyModal.classList.remove("active"));
-closeStats.addEventListener("click", () => statsModal.classList.remove("active"));
-
-[rarityModal, historyModal, statsModal].forEach(modal => {
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.classList.remove("active");
-        }
-    });
-});
-            
-const params = new URLSearchParams(location.search);
-
-if (
-    params.has("administrator") ||
-    params.has("awesome")
-) {
-    setTimeout(openAdminPanel, 300);
-}
-        setInterval(updateGachaSystem, 1000);
-        updateGachaSystem();
+            // ─── ДОСТИЖЕНИЯ: динамический пример ───
+            // Можно позже подвязать к данным
+        })();
     </script>
 </body>
 </html>
