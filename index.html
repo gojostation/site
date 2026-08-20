@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <title>GOJO STATION</title>
     <style>
+        /* ─── БАЗА ─── */
         * {
             margin: 0;
             padding: 0;
@@ -24,8 +25,8 @@
             justify-content: center;
             align-items: center;
             background-image:
-                radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+                radial-gradient(circle at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 60%),
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.02) 0%, transparent 40%),
                 linear-gradient(180deg, #08080e 0%, #0c0c18 100%);
             padding: 12px 16px;
         }
@@ -34,7 +35,7 @@
             max-width: 1200px;
             width: 100%;
             height: 100%;
-            max-height: 800px;
+            max-height: 820px;
             display: flex;
             flex-direction: column;
         }
@@ -46,7 +47,7 @@
             align-items: center;
             margin-bottom: 12px;
             padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             flex-shrink: 0;
         }
 
@@ -59,7 +60,7 @@
         .logo-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(145deg, #ffffff, #d0d0e0);
+            background: linear-gradient(145deg, #fff, #d0d0e0);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -67,7 +68,7 @@
             font-size: 20px;
             font-weight: 900;
             color: #0a0a12;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 40px rgba(255,255,255,0.04);
             flex-shrink: 0;
         }
 
@@ -82,7 +83,7 @@
             font-size: 26px;
             font-weight: 800;
             letter-spacing: 2px;
-            color: #ffffff;
+            color: #fff;
             line-height: 1;
         }
 
@@ -107,8 +108,8 @@
         }
 
         .admin-toggle {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
             color: #5a5a72;
             padding: 6px 16px;
             border-radius: 40px;
@@ -119,19 +120,19 @@
         }
 
         .admin-toggle:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.06);
             color: #8a8aa2;
         }
 
         .admin-toggle.active {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
         }
 
         /* ─── ОСНОВНАЯ СЕТКА ─── */
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1.2fr 1fr;
+            grid-template-columns: 1fr 1.3fr 1fr;
             gap: 14px;
             flex: 1;
             min-height: 0;
@@ -148,24 +149,21 @@
         }
 
         @media (max-width: 550px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
+            .main-grid { grid-template-columns: 1fr; gap: 8px; }
         }
 
         /* ─── КАРТОЧКИ ─── */
         .card {
-            background: rgba(12, 12, 22, 0.65);
+            background: rgba(12,12,22,0.65);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
             border-radius: 18px;
-            padding: 16px 20px;
+            padding: 14px 18px;
             transition: all 0.3s ease;
             animation: fadeUp 0.5s ease forwards;
             opacity: 0;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -180,20 +178,13 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 60%);
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.02) 0%, transparent 60%);
             pointer-events: none;
         }
 
         .card:hover {
-            border-color: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255,255,255,0.07);
         }
-
-        .card:nth-child(1) { animation-delay: 0.05s; }
-        .card:nth-child(2) { animation-delay: 0.10s; }
-        .card:nth-child(3) { animation-delay: 0.15s; }
-        .card:nth-child(4) { animation-delay: 0.20s; }
-        .card:nth-child(5) { animation-delay: 0.25s; }
-        .card:nth-child(6) { animation-delay: 0.30s; }
 
         .card-label {
             font-size: 11px;
@@ -219,49 +210,45 @@
             flex-direction: column;
             gap: 12px;
         }
-
         .left-col .card {
             padding: 14px 18px;
             flex: 1;
         }
 
-        /* Прибытия подряд */
+        /* Серия */
         .series-wrap {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .fire-icon {
             font-size: 32px;
-            opacity: 0.3;
-            animation: fireGrow 1.2s ease forwards;
+            animation: fireGrow 1.2s ease forwards, fireGlow 2.5s ease-in-out infinite 1.2s;
             display: inline-block;
+            opacity: 0;
         }
-
         @keyframes fireGrow {
-            0% { opacity: 0.2; transform: scale(0.5); filter: drop-shadow(0 0 0px rgba(255, 200, 50, 0)); }
-            60% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 30px rgba(255, 200, 50, 0.4)); }
-            100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 200, 50, 0.2)); }
+            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); filter: drop-shadow(0 0 0 rgba(255,200,50,0)); }
+            60% { opacity: 1; transform: scale(1.15) rotate(3deg); filter: drop-shadow(0 0 30px rgba(255,200,50,0.4)); }
+            100% { opacity: 1; transform: scale(1) rotate(0); filter: drop-shadow(0 0 15px rgba(255,200,50,0.2)); }
         }
-
-        .fire-icon.active {
-            opacity: 1;
-            animation: fireGlow 2.5s ease-in-out infinite;
-        }
-
         @keyframes fireGlow {
-            0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 10px rgba(255, 200, 50, 0.15)); }
-            50% { transform: scale(1.08) rotate(-4deg); filter: drop-shadow(0 0 30px rgba(255, 200, 50, 0.35)); }
+            0%,100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 10px rgba(255,200,50,0.15)); }
+            50% { transform: scale(1.06) rotate(-3deg); filter: drop-shadow(0 0 30px rgba(255,200,50,0.35)); }
         }
-
         .series-number {
             font-size: 56px;
             font-weight: 800;
-            color: #ffffff;
+            color: #fff;
             line-height: 1;
             letter-spacing: -2px;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
+            text-shadow: 0 0 40px rgba(255,255,255,0.03);
+        }
+        .series-sub {
+            color: #6a6a82;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 2px;
         }
 
         /* Заморозка */
@@ -270,40 +257,30 @@
             align-items: center;
             gap: 12px;
         }
-
         .snow-icon {
             font-size: 28px;
+            animation: snowSpin 1.5s ease 0.3s forwards, snowSpinLoop 5s linear infinite 1.8s;
             opacity: 0;
-            animation: snowSpin 1.5s ease 0.3s forwards;
             display: inline-block;
         }
-
         @keyframes snowSpin {
             0% { opacity: 0; transform: rotate(0deg) scale(0.3); }
             100% { opacity: 1; transform: rotate(360deg) scale(1); }
         }
-
-        .snow-icon.active {
-            animation: snowSpinLoop 5s linear infinite;
-        }
-
         @keyframes snowSpinLoop {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         .freeze-number {
             font-size: 36px;
             font-weight: 700;
-            color: #ffffff;
+            color: #fff;
         }
-
         .freeze-status {
             color: #6dd5ed;
             font-size: 16px;
             font-weight: 600;
         }
-
         .freeze-next {
             color: #4a4a62;
             font-size: 12px;
@@ -313,20 +290,17 @@
         .achieve-number {
             font-size: 30px;
             font-weight: 700;
-            color: #ffffff;
+            color: #fff;
         }
-
         .achieve-number span {
             color: #3a3a52;
             font-weight: 400;
         }
-
         .achieve-last {
             color: #4a4a62;
             font-size: 12px;
             margin: 2px 0 6px;
         }
-
         .card-link {
             color: #5a5a72;
             text-decoration: none;
@@ -338,38 +312,32 @@
             gap: 6px;
             border-bottom: 1px solid transparent;
         }
-
         .card-link:hover {
-            color: #ffffff;
-            border-bottom-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-bottom-color: rgba(255,255,255,0.1);
         }
-
         .card-link .arrow {
             transition: 0.3s;
             font-size: 15px;
         }
-
         .card-link:hover .arrow {
             transform: translateX(4px);
         }
 
-        /* ТГ блок */
+        /* ТГ */
         .tg-row {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         .tg-icon {
             font-size: 20px;
         }
-
         .tg-text {
             color: #5a5a72;
             font-size: 12px;
             font-weight: 500;
         }
-
         .tg-link {
             color: #7a7a92;
             text-decoration: none;
@@ -381,16 +349,13 @@
             transition: 0.3s;
             margin-top: 2px;
         }
-
         .tg-link:hover {
-            color: #ffffff;
+            color: #fff;
         }
-
         .tg-link .icon-link {
             font-size: 15px;
             transition: 0.3s;
         }
-
         .tg-link:hover .icon-link {
             transform: translate(2px, -2px);
         }
@@ -401,93 +366,103 @@
             flex-direction: column;
             gap: 12px;
         }
-
         .center-col .card {
-            padding: 14px 18px;
-            flex: 1;
+            padding: 12px 18px;
         }
 
-        /* Рандомный выбор */
-        .diamond-icon {
-            font-size: 20px;
+        /* Рандомный выбор — компактно */
+        .random-card {
+            padding: 8px 18px !important;
+            flex: 0 0 auto !important;
+            min-height: 52px;
+            justify-content: center;
+        }
+        .random-card .diamond-icon {
+            font-size: 18px;
+        }
+        .random-card .card-label {
+            font-size: 10px;
+            margin-bottom: 0;
+        }
+        .random-card .random-sub {
+            font-size: 10px;
             color: #3a3a52;
+            margin-left: auto;
         }
 
-        /* Сегодняшняя карточка */
+        /* Сегодняшняя карточка — растянута */
+        .today-card {
+            flex: 1 !important;
+            padding: 12px 18px !important;
+        }
         .today-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+            margin-bottom: 2px;
         }
-
+        .today-header .card-label {
+            font-size: 11px;
+            margin-bottom: 0;
+        }
         .today-time {
-            font-size: 32px;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
+            font-size: 18px;
+            font-weight: 600;
+            color: #6a6a82;
+            letter-spacing: 1px;
         }
-
         .card-preview {
             background: repeating-conic-gradient(rgba(255,255,255,0.02) 0% 25%, transparent 0% 50%) 0 0 / 16px 16px;
             border-radius: 14px;
-            height: 120px;
-            margin: 8px 0 10px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            flex: 1;
+            min-height: 100px;
+            margin: 6px 0 8px;
+            border: 1px solid rgba(255,255,255,0.03);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #3a3a52;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 1px;
             position: relative;
             overflow: hidden;
         }
-
         .card-preview img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 14px;
         }
-
         .card-preview .placeholder {
             color: #3a3a52;
             font-size: 14px;
             font-weight: 500;
             letter-spacing: 1px;
         }
-
         .today-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 2px;
         }
-
         .today-name {
-            color: #ffffff;
+            color: #fff;
             font-size: 18px;
             font-weight: 600;
         }
-
         .today-date {
             color: #4a4a62;
             font-size: 12px;
         }
-
         .today-tg-link {
             color: #5a5a72;
             text-decoration: none;
             font-size: 12px;
             font-weight: 500;
-            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            transition: 0.3s;
         }
-
         .today-tg-link:hover {
-            color: #ffffff;
+            color: #fff;
         }
 
         /* ─── ПРАВАЯ КОЛОНКА ─── */
@@ -496,7 +471,6 @@
             flex-direction: column;
             gap: 12px;
         }
-
         .right-col .card {
             padding: 14px 18px;
             flex: 1;
@@ -508,26 +482,23 @@
             align-items: center;
             gap: 12px;
         }
-
         .diamond-purple {
             font-size: 26px;
             color: #7a5cff;
-            filter: drop-shadow(0 0 15px rgba(122, 92, 255, 0.15));
+            filter: drop-shadow(0 0 15px rgba(122,92,255,0.15));
         }
-
         .rarity-today-label {
             color: #4a4a62;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
-
         .rarity-today-value {
             font-size: 32px;
             font-weight: 800;
             color: #b7a9ff;
             letter-spacing: 3px;
-            text-shadow: 0 0 40px rgba(122, 92, 255, 0.05);
+            text-shadow: 0 0 40px rgba(122,92,255,0.05);
         }
 
         /* Таймер */
@@ -537,20 +508,16 @@
             justify-content: center;
             padding: 6px 0;
         }
-
         .timer-unit {
             text-align: center;
         }
-
         .timer-unit .num {
             font-size: 44px;
             font-weight: 700;
-            color: #ffffff;
+            color: #fff;
             letter-spacing: 2px;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
             font-variant-numeric: tabular-nums;
         }
-
         .timer-unit .label {
             font-size: 10px;
             text-transform: uppercase;
@@ -558,7 +525,6 @@
             color: #3a3a52;
             margin-top: 2px;
         }
-
         .timer-divider {
             color: #3a3a52;
             font-size: 32px;
@@ -566,7 +532,6 @@
             display: flex;
             align-items: center;
         }
-
         .timer-arrival {
             text-align: center;
             color: #4a4a62;
@@ -574,41 +539,73 @@
             margin-top: 2px;
         }
 
-        /* Редкости карточек — КОМПАКТНО, БЕЗ ПУСТОТ */
+        /* Редкости со шкалами */
         .rarity-list {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 3px;
             flex: 1;
             justify-content: space-around;
         }
-
         .rarity-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 2px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            gap: 8px;
         }
-
         .rarity-row .name {
-            color: #7a7a92;
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .rarity-row .percent {
-            color: #b0b0c8;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
+            min-width: 70px;
+        }
+        .rarity-row .bar-wrap {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .rarity-row .bar {
+            height: 100%;
+            border-radius: 6px;
+            width: 0%;
+            transition: width 0.8s ease;
+        }
+        .rarity-row .bar.animated {
+            animation: barGrow 0.8s ease forwards;
+        }
+        @keyframes barGrow {
+            from { width: 0%; }
+            to { width: var(--width); }
+        }
+        .rarity-row .percent {
+            font-size: 14px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
         }
 
-        .rarity-row .name-common { color: #7a7a8a; }
-        .rarity-row .name-rare { color: #4a8fcf; }
-        .rarity-row .name-epic { color: #7a5cff; }
-        .rarity-row .name-mythic { color: #ff4a6a; }
-        .rarity-row .name-legendary { color: #ffb347; }
-        .rarity-row .name-exclusive { color: #ff6b8a; }
+        /* Цвета */
+        .name-common { color: #7a7a8a; }
+        .name-rare { color: #4a8fcf; }
+        .name-epic { color: #7a5cff; }
+        .name-mythic { color: #ff4a6a; }
+        .name-legendary { color: #ffb347; }
+        .name-exclusive { color: #ff6b8a; }
+
+        .bar-common { background: #7a7a8a; }
+        .bar-rare { background: #4a8fcf; }
+        .bar-epic { background: #7a5cff; }
+        .bar-mythic { background: #ff4a6a; }
+        .bar-legendary { background: #ffb347; }
+        .bar-exclusive {
+            background: linear-gradient(90deg, #ff6b8a, #ffb347, #7a5cff);
+            background-size: 200%;
+            animation: exclusiveGradient 3s ease infinite;
+        }
+        @keyframes exclusiveGradient {
+            0%,100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
 
         .percent-common { color: #7a7a8a; }
         .percent-rare { color: #4a8fcf; }
@@ -625,227 +622,155 @@
 
         /* ─── АДАПТИВ ─── */
         @media (max-width: 850px) {
-            .main-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .main-grid { grid-template-columns: 1fr 1fr; }
             .container { max-height: none; overflow-y: auto; }
             body { overflow-y: auto; padding: 12px 14px; }
             html, body { overflow-y: auto; }
-            .card-preview { height: 80px; }
+            .card-preview { min-height: 80px; }
             .timer-unit .num { font-size: 34px; }
             .series-number { font-size: 44px; }
             .rarity-today-value { font-size: 26px; }
-            .today-time { font-size: 26px; }
         }
 
         @media (max-width: 550px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
+            .main-grid { grid-template-columns: 1fr; gap: 8px; }
             .card { padding: 12px 14px; }
             .series-number { font-size: 38px; }
             .timer-unit .num { font-size: 30px; }
             .timer-wrap { gap: 10px; }
             .logo-text h1 { font-size: 20px; }
-            .logo-icon { width: 40px; height: 40px; font-size: 16px; }
-            .card-preview { height: 60px; }
-            .today-time { font-size: 22px; }
+            .logo-icon { width: 40px; height: 40px; }
+            .card-preview { min-height: 60px; }
             .rarity-today-value { font-size: 22px; }
-            .freeze-number { font-size: 28px; }
             .today-name { font-size: 16px; }
-            .rarity-row .name { font-size: 13px; }
-            .rarity-row .percent { font-size: 13px; }
+            .rarity-row .name { font-size: 13px; min-width: 60px; }
+            .rarity-row .percent { font-size: 13px; min-width: 30px; }
         }
 
         /* ─── АДМИН-ПАНЕЛЬ ─── */
         .admin-panel {
             display: none;
             margin-top: 8px;
-            background: rgba(12, 12, 22, 0.95);
+            background: rgba(12,12,22,0.95);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 16px;
             padding: 14px 18px;
             animation: fadeUp 0.4s ease forwards;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.4);
             flex-shrink: 0;
             max-height: 180px;
             overflow-y: auto;
         }
-
-        .admin-panel.open {
-            display: block;
-        }
-
+        .admin-panel.open { display: block; }
         .admin-panel h2 {
             font-size: 13px;
-            color: #ffffff;
+            color: #fff;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         .admin-panel h2 .badge {
             font-size: 9px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             padding: 1px 10px;
             border-radius: 40px;
             color: #5a5a72;
             font-weight: 400;
         }
-
         .admin-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
-
-        @media (max-width: 600px) {
-            .admin-grid { grid-template-columns: 1fr; }
-        }
-
-        .admin-group {
-            margin-bottom: 4px;
-        }
-
+        @media (max-width:600px) { .admin-grid { grid-template-columns:1fr; } }
+        .admin-group { margin-bottom:4px; }
         .admin-group label {
             display: block;
             font-size: 9px;
             color: #4a4a62;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
-            font-weight: 600;
+            letter-spacing:1px;
+            margin-bottom:2px;
+            font-weight:600;
         }
-
-        .admin-group input,
-        .admin-group select,
-        .admin-group textarea {
-            width: 100%;
-            padding: 5px 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            color: #e8e4f0;
-            font-size: 11px;
-            transition: 0.3s;
+        .admin-group input, .admin-group select, .admin-group textarea {
+            width:100%;
+            padding:5px 10px;
+            background:rgba(0,0,0,0.3);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:10px;
+            color:#e8e4f0;
+            font-size:11px;
+            transition:0.3s;
         }
-
-        .admin-group input:focus,
-        .admin-group select:focus,
-        .admin-group textarea:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.12);
+        .admin-group input:focus, .admin-group select:focus, .admin-group textarea:focus {
+            outline:none;
+            border-color:rgba(255,255,255,0.12);
         }
-
-        .admin-group textarea {
-            resize: vertical;
-            min-height: 28px;
-        }
-
+        .admin-group textarea { resize:vertical; min-height:28px; }
         .admin-group .file-upload {
-            border: 2px dashed rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            background: rgba(0, 0, 0, 0.2);
+            border:2px dashed rgba(255,255,255,0.06);
+            border-radius:10px;
+            padding:10px;
+            text-align:center;
+            cursor:pointer;
+            transition:0.3s;
+            background:rgba(0,0,0,0.2);
         }
-
-        .admin-group .file-upload:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .admin-group .file-upload input {
-            display: none;
-        }
-
-        .admin-group .file-upload .icon {
-            font-size: 16px;
-            display: block;
-        }
-
-        .admin-group .file-upload .text {
-            color: #4a4a62;
-            font-size: 9px;
-        }
-
-        .admin-preview {
-            max-width: 60px;
-            border-radius: 8px;
-            margin-top: 3px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
+        .admin-group .file-upload:hover { border-color:rgba(255,255,255,0.12); }
+        .admin-group .file-upload input { display:none; }
+        .admin-group .file-upload .icon { font-size:16px; display:block; }
+        .admin-group .file-upload .text { color:#4a4a62; font-size:9px; }
+        .admin-preview { max-width:60px; border-radius:8px; margin-top:3px; border:1px solid rgba(255,255,255,0.06); }
         .btn-admin {
-            padding: 5px 16px;
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 10px;
+            padding:5px 16px;
+            border:none;
+            border-radius:40px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+            font-size:10px;
         }
-
         .btn-admin-primary {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background:rgba(255,255,255,0.08);
+            color:#fff;
+            border:1px solid rgba(255,255,255,0.06);
         }
-
-        .btn-admin-primary:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
+        .btn-admin-primary:hover { background:rgba(255,255,255,0.12); }
         .btn-admin-danger {
-            background: rgba(255, 50, 50, 0.1);
-            color: #ff6b6b;
-            border: 1px solid rgba(255, 50, 50, 0.1);
+            background:rgba(255,50,50,0.1);
+            color:#ff6b6b;
+            border:1px solid rgba(255,50,50,0.1);
         }
-
-        .btn-admin-danger:hover {
-            background: rgba(255, 50, 50, 0.15);
-        }
-
+        .btn-admin-danger:hover { background:rgba(255,50,50,0.15); }
         .admin-actions {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-top: 8px;
+            display:flex;
+            gap:6px;
+            flex-wrap:wrap;
+            margin-top:8px;
         }
-
-        .admin-panel::-webkit-scrollbar {
-            width: 3px;
-        }
-
-        .admin-panel::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .admin-panel::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 4px;
-        }
+        .admin-panel::-webkit-scrollbar { width:3px; }
+        .admin-panel::-webkit-scrollbar-track { background:transparent; }
+        .admin-panel::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08); border-radius:4px; }
 
         .admin-toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(12, 12, 22, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 10px 24px;
-            border-radius: 40px;
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 500;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
-            z-index: 999;
-            animation: fadeUp 0.4s ease forwards;
+            position:fixed;
+            bottom:20px;
+            left:50%;
+            transform:translateX(-50%);
+            background:rgba(12,12,22,0.95);
+            backdrop-filter:blur(12px);
+            border:1px solid rgba(255,255,255,0.06);
+            padding:10px 24px;
+            border-radius:40px;
+            color:#fff;
+            font-size:13px;
+            font-weight:500;
+            box-shadow:0 8px 40px rgba(0,0,0,0.6);
+            z-index:999;
+            animation:fadeUp 0.4s ease forwards;
         }
     </style>
 </head>
@@ -876,20 +801,21 @@
         <!-- ═══ ЛЕВАЯ КОЛОНКА ═══ -->
         <div class="left-col">
 
-            <!-- ПРИБЫТИЯ ПОДРЯД -->
+            <!-- ТЕКУЩАЯ СЕРИЯ -->
             <div class="card">
-                <div class="card-label">✦ Прибытия подряд</div>
+                <div class="card-label">✦ Текущая серия</div>
                 <div class="series-wrap">
-                    <span class="fire-icon active">🔥</span>
+                    <span class="fire-icon">🔥</span>
                     <span class="series-number" id="streakDays">47</span>
                 </div>
+                <div class="series-sub">дней подряд</div>
             </div>
 
             <!-- ЗАМОРОЗКА -->
             <div class="card">
                 <div class="card-label">❄️ Заморозка</div>
                 <div class="freeze-wrap">
-                    <span class="snow-icon active">❄️</span>
+                    <span class="snow-icon">❄️</span>
                     <span class="freeze-number" id="freezeDisplay">1 / 1</span>
                 </div>
                 <div class="freeze-status" id="freezeStatus">Доступна</div>
@@ -920,20 +846,20 @@
         <!-- ═══ ЦЕНТРАЛЬНАЯ КОЛОНКА ═══ -->
         <div class="center-col">
 
-            <!-- РАНДОМНЫЙ ВЫБОР РЕДКОСТИ -->
-            <div class="card">
+            <!-- РАНДОМНЫЙ ВЫБОР (КОМПАКТНО) -->
+            <div class="card random-card">
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span class="diamond-icon">💎</span>
-                    <span class="card-label" style="font-size:11px;">Рандомный выбор редкости карточки</span>
+                    <span class="card-label" style="font-size:10px;">Рандомный выбор редкости карточки</span>
+                    <span class="random-sub">Ежедневно в 0:00</span>
                 </div>
-                <div style="color:#3a3a52; font-size:11px; margin-top:2px;">Ежедневно в 0:00</div>
             </div>
 
-            <!-- СЕГОДНЯШНЯЯ КАРТОЧКА -->
-            <div class="card" style="flex:1;">
+            <!-- СЕГОДНЯШНЯЯ КАРТОЧКА (РАСТЯНУТА) -->
+            <div class="card today-card">
                 <div class="today-header">
                     <span class="card-label">🕐 Сегодняшняя карточка</span>
-                    <span class="today-time" id="todayTime">20:31</span>
+                    <!-- время убрали, оставили только маленькую подпись -->
                 </div>
                 <div class="card-preview" id="cardPreview">
                     <span class="placeholder">📸 карточка</span>
@@ -987,34 +913,11 @@
                 <div class="timer-arrival">Годко прибудет в <span id="arrivalTime">20:31</span></div>
             </div>
 
-            <!-- РЕДКОСТИ КАРТОЧЕК (БЕЗ ПУСТОТ) -->
-            <div class="card" style="flex:1; justify-content: center;">
+            <!-- РЕДКОСТИ КАРТОЧЕК СО ШКАЛАМИ -->
+            <div class="card" style="flex:1; justify-content:center;">
                 <div class="card-label-sm">Редкости карточек</div>
                 <div class="rarity-list" id="rarityList">
-                    <div class="rarity-row">
-                        <span class="name name-common">Обычная</span>
-                        <span class="percent percent-common">60%</span>
-                    </div>
-                    <div class="rarity-row">
-                        <span class="name name-rare">Редкая</span>
-                        <span class="percent percent-rare">10%</span>
-                    </div>
-                    <div class="rarity-row">
-                        <span class="name name-epic">Эпическая</span>
-                        <span class="percent percent-epic">4%</span>
-                    </div>
-                    <div class="rarity-row">
-                        <span class="name name-mythic">Мифическая</span>
-                        <span class="percent percent-mythic">1%</span>
-                    </div>
-                    <div class="rarity-row">
-                        <span class="name name-legendary">Легендарная</span>
-                        <span class="percent percent-legendary">0.9%</span>
-                    </div>
-                    <div class="rarity-row">
-                        <span class="name name-exclusive">Эксклюзивная</span>
-                        <span class="percent percent-exclusive">??</span>
-                    </div>
+                    <!-- заполняется из JS -->
                 </div>
             </div>
 
@@ -1092,12 +995,12 @@
         streak: { days: 47 },
         freeze: { available: 1, max: 1, status: 'Доступна' },
         rarities: [
-            { name: 'Обычная', percent: '60%' },
-            { name: 'Редкая', percent: '10%' },
-            { name: 'Эпическая', percent: '4%' },
-            { name: 'Мифическая', percent: '1%' },
-            { name: 'Легендарная', percent: '0.9%' },
-            { name: 'Эксклюзивная', percent: '??' },
+            { name: 'Обычная', percent: 60 },
+            { name: 'Редкая', percent: 10 },
+            { name: 'Эпическая', percent: 4 },
+            { name: 'Мифическая', percent: 1 },
+            { name: 'Легендарная', percent: 0.9 },
+            { name: 'Эксклюзивная', percent: null }, // null означает "??"
         ],
     };
 
@@ -1118,23 +1021,20 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
+    // ─── ОБНОВЛЕНИЕ UI ───
     function updateUI() {
+        // Левая колонка
         document.getElementById('streakDays').textContent = appData.streak.days;
         document.getElementById('freezeDisplay').textContent = `${appData.freeze.available} / ${appData.freeze.max}`;
         document.getElementById('freezeStatus').textContent = appData.freeze.status;
-        document.getElementById('todayTime').textContent = '20:31';
-        document.getElementById('todayRarityValue').textContent = appData.card.rarity.toUpperCase() || 'ЭПИЧЕСКАЯ';
+
+        // Центр
         document.getElementById('cardName').textContent = appData.card.name || 'Годко тест';
         document.getElementById('cardDate').textContent = appData.card.date || '20.08.2026 • День 47';
+        // Редкость в правой колонке
+        document.getElementById('todayRarityValue').textContent = appData.card.rarity.toUpperCase() || 'ЭПИЧЕСКАЯ';
 
-        const list = document.getElementById('rarityList');
-        list.innerHTML = appData.rarities.map(r =>
-            `<div class="rarity-row">
-                <span class="name name-${r.name.toLowerCase()}">${r.name}</span>
-                <span class="percent percent-${r.name.toLowerCase()}">${r.percent}</span>
-            </div>`
-        ).join('');
-
+        // Фото
         const preview = document.getElementById('cardPreview');
         if (appData.card.image) {
             preview.innerHTML = `<img src="${appData.card.image}" alt="карточка" />`;
@@ -1142,6 +1042,46 @@
             preview.innerHTML = `<span class="placeholder">📸 карточка</span>`;
         }
 
+        // Редкости со шкалами
+        const list = document.getElementById('rarityList');
+        list.innerHTML = '';
+        appData.rarities.forEach(r => {
+            const row = document.createElement('div');
+            row.className = 'rarity-row';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.className = `name name-${r.name.toLowerCase()}`;
+            nameSpan.textContent = r.name;
+
+            const barWrap = document.createElement('div');
+            barWrap.className = 'bar-wrap';
+            const bar = document.createElement('div');
+            bar.className = `bar bar-${r.name.toLowerCase()} animated`;
+            if (r.percent !== null && r.percent !== undefined) {
+                const p = Math.min(r.percent, 100);
+                bar.style.setProperty('--width', p + '%');
+                bar.style.width = p + '%';
+            } else {
+                // Эксклюзивная — особый стиль (без шкалы или полоса градиент)
+                bar.style.setProperty('--width', '100%');
+                bar.style.width = '100%';
+                bar.style.background = 'linear-gradient(90deg, #ff6b8a, #ffb347, #7a5cff)';
+                bar.style.backgroundSize = '200%';
+                bar.style.animation = 'exclusiveGradient 3s ease infinite';
+            }
+            barWrap.appendChild(bar);
+
+            const percentSpan = document.createElement('span');
+            percentSpan.className = `percent percent-${r.name.toLowerCase()}`;
+            percentSpan.textContent = (r.percent !== null && r.percent !== undefined) ? r.percent + '%' : '??';
+
+            row.appendChild(nameSpan);
+            row.appendChild(barWrap);
+            row.appendChild(percentSpan);
+            list.appendChild(row);
+        });
+
+        // Админка
         document.getElementById('adminCardName').value = appData.card.name || '';
         document.getElementById('adminCardRarity').value = appData.card.rarity || 'Эпическая';
         document.getElementById('adminStreak').value = appData.streak.days || 47;
@@ -1193,7 +1133,7 @@
 
     requestAnimationFrame(updateTimer);
 
-    // ─── ВРЕМЯ ───
+    // ─── ВРЕМЯ В ШАПКЕ ───
     function updateHeaderTime() {
         const now = new Date();
         document.getElementById('headerTime').textContent =
