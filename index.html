@@ -367,34 +367,11 @@
             gap: 12px;
         }
         .center-col .card {
-            padding: 12px 18px;
+            padding: 14px 18px;
+            flex: 1;
         }
 
-        /* Рандомный выбор — компактно */
-        .random-card {
-            padding: 8px 18px !important;
-            flex: 0 0 auto !important;
-            min-height: 52px;
-            justify-content: center;
-        }
-        .random-card .diamond-icon {
-            font-size: 18px;
-        }
-        .random-card .card-label {
-            font-size: 10px;
-            margin-bottom: 0;
-        }
-        .random-card .random-sub {
-            font-size: 10px;
-            color: #3a3a52;
-            margin-left: auto;
-        }
-
-        /* Сегодняшняя карточка — растянута */
-        .today-card {
-            flex: 1 !important;
-            padding: 12px 18px !important;
-        }
+        /* Сегодняшняя карточка */
         .today-header {
             display: flex;
             justify-content: space-between;
@@ -404,12 +381,6 @@
         .today-header .card-label {
             font-size: 11px;
             margin-bottom: 0;
-        }
-        .today-time {
-            font-size: 18px;
-            font-weight: 600;
-            color: #6a6a82;
-            letter-spacing: 1px;
         }
         .card-preview {
             background: repeating-conic-gradient(rgba(255,255,255,0.02) 0% 25%, transparent 0% 50%) 0 0 / 16px 16px;
@@ -476,22 +447,31 @@
             flex: 1;
         }
 
-        /* Сегодняшняя редкость */
+        /* Блок: Рандомный выбор + Сегодняшняя редкость (объединены) */
+        .rarity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+        }
+        .rarity-header .card-label {
+            font-size: 11px;
+            margin-bottom: 0;
+        }
+        .rarity-header .random-sub {
+            font-size: 11px;
+            color: #4a4a62;
+        }
         .rarity-today-wrap {
             display: flex;
             align-items: center;
             gap: 12px;
+            margin-top: 4px;
         }
         .diamond-purple {
             font-size: 26px;
             color: #7a5cff;
             filter: drop-shadow(0 0 15px rgba(122,92,255,0.15));
-        }
-        .rarity-today-label {
-            color: #4a4a62;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
         .rarity-today-value {
             font-size: 32px;
@@ -501,7 +481,7 @@
             text-shadow: 0 0 40px rgba(122,92,255,0.05);
         }
 
-        /* Таймер */
+        /* Таймер до 0:00 */
         .timer-wrap {
             display: flex;
             gap: 18px;
@@ -846,20 +826,10 @@
         <!-- ═══ ЦЕНТРАЛЬНАЯ КОЛОНКА ═══ -->
         <div class="center-col">
 
-            <!-- РАНДОМНЫЙ ВЫБОР (КОМПАКТНО) -->
-            <div class="card random-card">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <span class="diamond-icon">💎</span>
-                    <span class="card-label" style="font-size:10px;">Рандомный выбор редкости карточки</span>
-                    <span class="random-sub">Ежедневно в 0:00</span>
-                </div>
-            </div>
-
-            <!-- СЕГОДНЯШНЯЯ КАРТОЧКА (РАСТЯНУТА) -->
-            <div class="card today-card">
+            <!-- СЕГОДНЯШНЯЯ КАРТОЧКА (без времени) -->
+            <div class="card" style="flex:1;">
                 <div class="today-header">
                     <span class="card-label">🕐 Сегодняшняя карточка</span>
-                    <!-- время убрали, оставили только маленькую подпись -->
                 </div>
                 <div class="card-preview" id="cardPreview">
                     <span class="placeholder">📸 карточка</span>
@@ -880,37 +850,39 @@
         <!-- ═══ ПРАВАЯ КОЛОНКА ═══ -->
         <div class="right-col">
 
-            <!-- СЕГОДНЯШНЯЯ РЕДКОСТЬ -->
+            <!-- РАНДОМНЫЙ ВЫБОР + СЕГОДНЯШНЯЯ РЕДКОСТЬ (ОБЪЕДИНЕНЫ) -->
             <div class="card">
+                <div class="rarity-header">
+                    <span class="card-label">Рандомный выбор редкости карточки</span>
+                    <span class="random-sub">Ежедневно в 0:00</span>
+                </div>
                 <div class="rarity-today-wrap">
                     <span class="diamond-purple">💎</span>
-                    <div>
-                        <div class="rarity-today-label">Сегодняшняя редкость</div>
-                        <div class="rarity-today-value" id="todayRarityValue">ЭПИЧЕСКАЯ</div>
-                    </div>
+                    <span style="font-size:13px; color:#4a4a62; font-weight:500;">Сегодняшняя редкость</span>
+                    <span class="rarity-today-value" id="todayRarityValue">ЭПИЧЕСКАЯ</span>
                 </div>
             </div>
 
-            <!-- ДО СЛЕДУЮЩЕГО ПРИБЫТИЯ -->
+            <!-- ДО СЛЕДУЮЩЕГО ПРИБЫТИЯ (таймер до 0:00) -->
             <div class="card">
                 <div class="card-label-sm">До следующего прибытия</div>
                 <div class="timer-wrap" id="timer">
                     <div class="timer-unit">
-                        <div class="num" id="hours">05</div>
+                        <div class="num" id="hoursMid">00</div>
                         <div class="label">Часов</div>
                     </div>
                     <span class="timer-divider">:</span>
                     <div class="timer-unit">
-                        <div class="num" id="minutes">38</div>
+                        <div class="num" id="minutesMid">00</div>
                         <div class="label">Минут</div>
                     </div>
                     <span class="timer-divider">:</span>
                     <div class="timer-unit">
-                        <div class="num" id="seconds">12</div>
+                        <div class="num" id="secondsMid">00</div>
                         <div class="label">Секунд</div>
                     </div>
                 </div>
-                <div class="timer-arrival">Годко прибудет в <span id="arrivalTime">20:31</span></div>
+                <div class="timer-arrival">Годко прибудет в <span id="arrivalTimeMid">20:31</span></div>
             </div>
 
             <!-- РЕДКОСТИ КАРТОЧЕК СО ШКАЛАМИ -->
@@ -1000,7 +972,7 @@
             { name: 'Эпическая', percent: 4 },
             { name: 'Мифическая', percent: 1 },
             { name: 'Легендарная', percent: 0.9 },
-            { name: 'Эксклюзивная', percent: null }, // null означает "??"
+            { name: 'Эксклюзивная', percent: null },
         ],
     };
 
@@ -1062,7 +1034,6 @@
                 bar.style.setProperty('--width', p + '%');
                 bar.style.width = p + '%';
             } else {
-                // Эксклюзивная — особый стиль (без шкалы или полоса градиент)
                 bar.style.setProperty('--width', '100%');
                 bar.style.width = '100%';
                 bar.style.background = 'linear-gradient(90deg, #ff6b8a, #ffb347, #7a5cff)';
@@ -1097,41 +1068,45 @@
         }
     }
 
-    // ─── ТАЙМЕР ───
-    let lastUpdate = 0;
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
-    const arrivalEl = document.getElementById('arrivalTime');
+    // ─── ТАЙМЕР ДО 0:00 ───
+    let lastUpdateMid = 0;
+    const hoursMid = document.getElementById('hoursMid');
+    const minutesMid = document.getElementById('minutesMid');
+    const secondsMid = document.getElementById('secondsMid');
+    const arrivalMid = document.getElementById('arrivalTimeMid');
 
-    function updateTimer(timestamp) {
-        if (timestamp - lastUpdate >= 1000) {
-            lastUpdate = timestamp;
+    function updateTimerMid(timestamp) {
+        if (timestamp - lastUpdateMid >= 1000) {
+            lastUpdateMid = timestamp;
 
             const now = new Date();
             let target = new Date(now);
-            target.setHours(20, 31, 0, 0);
+            target.setHours(24, 0, 0, 0); // следующая полночь
 
-            if (now >= target) {
-                target.setDate(target.getDate() + 1);
+            // если сейчас уже после 20:31, то цель — завтрашняя полночь, но нам нужно до 0:00 текущей ночи
+            // на самом деле мы считаем до 0:00 текущей ночи, если сейчас до 0:00, иначе до следующей
+            let midnight = new Date(now);
+            midnight.setHours(24, 0, 0, 0);
+            if (now >= midnight) {
+                midnight.setDate(midnight.getDate() + 1);
             }
 
-            let diff = Math.floor((target - now) / 1000);
+            let diff = Math.floor((midnight - now) / 1000);
             if (diff < 0) diff = 0;
 
             const h = String(Math.floor(diff / 3600)).padStart(2, '0');
             const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
             const s = String(diff % 60).padStart(2, '0');
 
-            if (hoursEl.textContent !== h) hoursEl.textContent = h;
-            if (minutesEl.textContent !== m) minutesEl.textContent = m;
-            if (secondsEl.textContent !== s) secondsEl.textContent = s;
-            arrivalEl.textContent = '20:31';
+            if (hoursMid.textContent !== h) hoursMid.textContent = h;
+            if (minutesMid.textContent !== m) minutesMid.textContent = m;
+            if (secondsMid.textContent !== s) secondsMid.textContent = s;
+            arrivalMid.textContent = '20:31';
         }
-        requestAnimationFrame(updateTimer);
+        requestAnimationFrame(updateTimerMid);
     }
 
-    requestAnimationFrame(updateTimer);
+    requestAnimationFrame(updateTimerMid);
 
     // ─── ВРЕМЯ В ШАПКЕ ───
     function updateHeaderTime() {
