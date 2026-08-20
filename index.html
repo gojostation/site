@@ -18,8 +18,8 @@
         .container { max-width:1200px; width:100%; height:100%; max-height:820px; display:flex; flex-direction:column; }
         /* ─── ШАПКА ─── */
         .header {
-            display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
-            padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.04); flex-shrink:0;
+            display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;
+            padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.04); flex-shrink:0;
         }
         .logo-area { display:flex; align-items:center; gap:14px; }
         .logo-icon {
@@ -43,7 +43,7 @@
 
         /* ─── СЕТКА ─── */
         .main-grid {
-            display:grid; grid-template-columns:1fr 1.3fr 1fr; gap:14px;
+            display:grid; grid-template-columns:1fr 1.4fr 1fr; gap:14px;
             flex:1; min-height:0;
         }
         @media(max-width:850px){ .main-grid{grid-template-columns:1fr 1fr; gap:10px;} .container{max-height:none;height:100%;overflow-y:auto;} body{overflow-y:auto;padding:12px 14px;} html,body{overflow-y:auto;} }
@@ -122,14 +122,14 @@
         .tg-link .icon-link { font-size:15px; transition:0.3s; }
         .tg-link:hover .icon-link { transform:translate(2px,-2px); }
 
-        /* ─── ЦЕНТР ─── */
+        /* ─── ЦЕНТР (СЕГОДНЯШНЯЯ КАРТОЧКА — ВЫШЕ) ─── */
         .center-col { display:flex; flex-direction:column; gap:12px; }
-        .center-col .card { padding:14px 18px; flex:1; }
+        .center-col .card { padding:12px 18px; flex:1; }
         .today-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2px; }
         .today-header .card-label { font-size:11px; margin-bottom:0; }
         .card-preview {
             background:repeating-conic-gradient(rgba(255,255,255,0.02) 0% 25%, transparent 0% 50%) 0 0 / 16px 16px;
-            border-radius:14px; flex:1; min-height:100px; margin:6px 0 8px;
+            border-radius:14px; flex:1; min-height:130px; /* Увеличил */ margin:4px 0 8px;
             border:1px solid rgba(255,255,255,0.03);
             display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
         }
@@ -148,7 +148,7 @@
         .right-col { display:flex; flex-direction:column; gap:12px; }
         .right-col .card { padding:14px 18px; flex:1; }
 
-        /* Блок Рандомный выбор (исправлен) */
+        /* Рандомный выбор редкости */
         .rarity-block { display:flex; flex-direction:column; justify-content:flex-start; gap:0; }
         .rarity-header-line {
             display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0;
@@ -174,7 +174,7 @@
         .timer-divider { color:#3a3a52; font-size:32px; font-weight:300; display:flex; align-items:center; }
         .timer-arrival { text-align:center; color:#4a4a62; font-size:12px; margin-top:2px; }
 
-        /* Редкости со шкалами и ромбами */
+        /* ─── РЕДКОСТИ КАРТОЧЕК (С ЦВЕТНЫМИ РОМБАМИ, ТЕКСТОМ И ШКАЛАМИ) ─── */
         .rarity-list { display:flex; flex-direction:column; gap:3px; flex:1; justify-content:space-around; }
         .rarity-row { display:flex; align-items:center; gap:8px; }
         .rarity-row .diamond { font-size:14px; margin-right:2px; }
@@ -185,7 +185,7 @@
         @keyframes barGrow { from { width:0%; } to { width:var(--width); } }
         .rarity-row .percent { font-size:14px; font-weight:600; min-width:40px; text-align:right; }
 
-        /* Цвета */
+        /* Цвета для ромбов, текста, шкал */
         .diamond-common, .name-common, .percent-common { color:#7a7a8a; }
         .diamond-rare, .name-rare, .percent-rare { color:#4a8fcf; }
         .diamond-epic, .name-epic, .percent-epic { color:#7a5cff; }
@@ -208,8 +208,8 @@
         @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 
         /* ─── АДАПТИВ ─── */
-        @media(max-width:850px){ .card-preview{min-height:80px;} .timer-unit .num{font-size:34px;} .series-number{font-size:44px;} .rarity-today-value{font-size:30px;} }
-        @media(max-width:550px){ .card{padding:12px 14px;} .series-number{font-size:38px;} .timer-unit .num{font-size:30px;} .timer-wrap{gap:10px;} .logo-text h1{font-size:20px;} .logo-icon{width:40px;height:40px;} .card-preview{min-height:60px;} .rarity-today-value{font-size:26px;} .today-name{font-size:16px;} .rarity-row .name{font-size:13px;min-width:60px;} .rarity-row .percent{font-size:13px;min-width:30px;} .rarity-row .diamond{font-size:12px;} }
+        @media(max-width:850px){ .card-preview{min-height:90px;} .timer-unit .num{font-size:34px;} .series-number{font-size:44px;} .rarity-today-value{font-size:30px;} }
+        @media(max-width:550px){ .card{padding:12px 14px;} .series-number{font-size:38px;} .timer-unit .num{font-size:30px;} .timer-wrap{gap:10px;} .logo-text h1{font-size:20px;} .logo-icon{width:40px;height:40px;} .card-preview{min-height:70px;} .rarity-today-value{font-size:26px;} .today-name{font-size:16px;} .rarity-row .name{font-size:13px;min-width:60px;} .rarity-row .percent{font-size:13px;min-width:30px;} .rarity-row .diamond{font-size:12px;} }
 
         /* ─── АДМИН-ПАНЕЛЬ ─── */
         .admin-panel { display:none; margin-top:8px; background:rgba(12,12,22,0.95); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:14px 18px; animation:fadeUp 0.4s ease forwards; box-shadow:0 4px 25px rgba(0,0,0,0.4); flex-shrink:0; max-height:180px; overflow-y:auto; }
@@ -304,7 +304,7 @@
             </div>
         </div>
 
-        <!-- ═══ ЦЕНТРАЛЬНАЯ КОЛОНКА ═══ -->
+        <!-- ═══ ЦЕНТРАЛЬНАЯ КОЛОНКА (СЕГОДНЯШНЯЯ КАРТОЧКА — ВЫШЕ) ═══ -->
         <div class="center-col">
             <div class="card" style="flex:1;">
                 <div class="today-header">
@@ -328,7 +328,7 @@
         <!-- ═══ ПРАВАЯ КОЛОНКА ═══ -->
         <div class="right-col">
 
-            <!-- РАНДОМНЫЙ ВЫБОР РЕДКОСТИ (исправленный) -->
+            <!-- РАНДОМНЫЙ ВЫБОР РЕДКОСТИ -->
             <div class="card">
                 <div class="rarity-block">
                     <div class="rarity-header-line">
@@ -362,7 +362,7 @@
                 <div class="timer-arrival">Годко прибудет в <span id="arrivalTimeMid">20:31</span></div>
             </div>
 
-            <!-- РЕДКОСТИ КАРТОЧЕК С РОМБАМИ И ШКАЛАМИ -->
+            <!-- РЕДКОСТИ КАРТОЧЕК С ЦВЕТНЫМИ РОМБАМИ, ТЕКСТОМ И ШКАЛАМИ -->
             <div class="card" style="flex:1; justify-content:center;">
                 <div class="card-label-sm">Редкости карточек</div>
                 <div class="rarity-list" id="rarityList">
@@ -486,8 +486,8 @@
             preview.innerHTML = `<span class="placeholder">📸 карточка</span>`;
         }
 
-        // Редкости со шкалами и ромбами
-        const list = document.getElementById('rarityList');
+        // Редкости с цветными ромбами, текстом и шкалами
+        const list = document.getElementById('arityList');
         list.innerHTML = '';
         appData.rarities.forEach(r => {
             const row = document.createElement('div');
