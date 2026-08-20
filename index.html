@@ -129,7 +129,7 @@
             color: #fff;
         }
 
-        /* ─── ОСНОВНАЯ СЕТКА ─── */
+        /* ─── СЕТКА ─── */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1.3fr 1fr;
@@ -139,10 +139,7 @@
         }
 
         @media (max-width: 850px) {
-            .main-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
+            .main-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .container { max-height: none; height: 100%; overflow-y: auto; }
             body { overflow-y: auto; padding: 12px 14px; }
             html, body { overflow-y: auto; }
@@ -360,7 +357,7 @@
             transform: translate(2px, -2px);
         }
 
-        /* ─── ЦЕНТРАЛЬНАЯ КОЛОНКА ─── */
+        /* ─── ЦЕНТР ─── */
         .center-col {
             display: flex;
             flex-direction: column;
@@ -447,12 +444,15 @@
             flex: 1;
         }
 
-        /* Блок: Рандомный выбор + Сегодняшняя редкость (объединены) */
+        /* Блок "Рандомный выбор редкости" + "Сегодняшняя редкость" */
+        .rarity-block {
+            display: flex;
+            flex-direction: column;
+        }
         .rarity-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 2px;
         }
         .rarity-header .card-label {
             font-size: 11px;
@@ -462,6 +462,7 @@
             font-size: 11px;
             color: #4a4a62;
         }
+
         .rarity-today-wrap {
             display: flex;
             align-items: center;
@@ -472,6 +473,11 @@
             font-size: 26px;
             color: #7a5cff;
             filter: drop-shadow(0 0 15px rgba(122,92,255,0.15));
+        }
+        .rarity-label {
+            font-size: 13px;
+            color: #4a4a62;
+            font-weight: 500;
         }
         .rarity-today-value {
             font-size: 32px;
@@ -519,7 +525,7 @@
             margin-top: 2px;
         }
 
-        /* Редкости со шкалами */
+        /* Редкости со шкалами и цветными ромбами */
         .rarity-list {
             display: flex;
             flex-direction: column;
@@ -531,6 +537,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+        .rarity-row .diamond {
+            font-size: 14px;
+            margin-right: 2px;
         }
         .rarity-row .name {
             font-size: 14px;
@@ -564,7 +574,14 @@
             text-align: right;
         }
 
-        /* Цвета */
+        /* Цвета для ромбов, текста, шкал */
+        .diamond-common { color: #7a7a8a; }
+        .diamond-rare { color: #4a8fcf; }
+        .diamond-epic { color: #7a5cff; }
+        .diamond-mythic { color: #ff4a6a; }
+        .diamond-legendary { color: #ffb347; }
+        .diamond-exclusive { color: #ff6b8a; }
+
         .name-common { color: #7a7a8a; }
         .name-rare { color: #4a8fcf; }
         .name-epic { color: #7a5cff; }
@@ -625,6 +642,7 @@
             .today-name { font-size: 16px; }
             .rarity-row .name { font-size: 13px; min-width: 60px; }
             .rarity-row .percent { font-size: 13px; min-width: 30px; }
+            .rarity-row .diamond { font-size: 12px; }
         }
 
         /* ─── АДМИН-ПАНЕЛЬ ─── */
@@ -781,7 +799,6 @@
         <!-- ═══ ЛЕВАЯ КОЛОНКА ═══ -->
         <div class="left-col">
 
-            <!-- ТЕКУЩАЯ СЕРИЯ -->
             <div class="card">
                 <div class="card-label">✦ Текущая серия</div>
                 <div class="series-wrap">
@@ -791,7 +808,6 @@
                 <div class="series-sub">дней подряд</div>
             </div>
 
-            <!-- ЗАМОРОЗКА -->
             <div class="card">
                 <div class="card-label">❄️ Заморозка</div>
                 <div class="freeze-wrap">
@@ -802,7 +818,6 @@
                 <div class="freeze-next" id="freezeNext">Каждые 15 прибытий подряд</div>
             </div>
 
-            <!-- ДОСТИЖЕНИЯ -->
             <div class="card">
                 <div class="card-label">🏆 Достижения</div>
                 <div class="achieve-number">— <span>/ 50</span></div>
@@ -810,7 +825,6 @@
                 <a href="#" class="card-link">Все достижения →</a>
             </div>
 
-            <!-- ТЕЛЕГРАМ -->
             <div class="card">
                 <div class="tg-row">
                     <span class="tg-icon">📩</span>
@@ -826,7 +840,6 @@
         <!-- ═══ ЦЕНТРАЛЬНАЯ КОЛОНКА ═══ -->
         <div class="center-col">
 
-            <!-- СЕГОДНЯШНЯЯ КАРТОЧКА (без времени) -->
             <div class="card" style="flex:1;">
                 <div class="today-header">
                     <span class="card-label">🕐 Сегодняшняя карточка</span>
@@ -850,20 +863,22 @@
         <!-- ═══ ПРАВАЯ КОЛОНКА ═══ -->
         <div class="right-col">
 
-            <!-- РАНДОМНЫЙ ВЫБОР + СЕГОДНЯШНЯЯ РЕДКОСТЬ (ОБЪЕДИНЕНЫ) -->
+            <!-- РАНДОМНЫЙ ВЫБОР + СЕГОДНЯШНЯЯ РЕДКОСТЬ -->
             <div class="card">
-                <div class="rarity-header">
-                    <span class="card-label">Рандомный выбор редкости карточки</span>
-                    <span class="random-sub">Ежедневно в 0:00</span>
-                </div>
-                <div class="rarity-today-wrap">
-                    <span class="diamond-purple">💎</span>
-                    <span style="font-size:13px; color:#4a4a62; font-weight:500;">Сегодняшняя редкость</span>
-                    <span class="rarity-today-value" id="todayRarityValue">ЭПИЧЕСКАЯ</span>
+                <div class="rarity-block">
+                    <div class="rarity-header">
+                        <span class="card-label">Рандомный выбор редкости</span>
+                        <span class="random-sub">Ежедневно в 0:00</span>
+                    </div>
+                    <div class="rarity-today-wrap">
+                        <span class="diamond-purple">💎</span>
+                        <span class="rarity-label">Сегодняшняя редкость</span>
+                        <span class="rarity-today-value" id="todayRarityValue">ЭПИЧЕСКАЯ</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- ДО СЛЕДУЮЩЕГО ПРИБЫТИЯ (таймер до 0:00) -->
+            <!-- ТАЙМЕР ДО 0:00 -->
             <div class="card">
                 <div class="card-label-sm">До следующего прибытия</div>
                 <div class="timer-wrap" id="timer">
@@ -885,7 +900,7 @@
                 <div class="timer-arrival">Годко прибудет в <span id="arrivalTimeMid">20:31</span></div>
             </div>
 
-            <!-- РЕДКОСТИ КАРТОЧЕК СО ШКАЛАМИ -->
+            <!-- РЕДКОСТИ КАРТОЧЕК С ЦВЕТНЫМИ РОМБАМИ И ШКАЛАМИ -->
             <div class="card" style="flex:1; justify-content:center;">
                 <div class="card-label-sm">Редкости карточек</div>
                 <div class="rarity-list" id="rarityList">
@@ -1014,17 +1029,24 @@
             preview.innerHTML = `<span class="placeholder">📸 карточка</span>`;
         }
 
-        // Редкости со шкалами
+        // Редкости со шкалами и цветными ромбами
         const list = document.getElementById('rarityList');
         list.innerHTML = '';
         appData.rarities.forEach(r => {
             const row = document.createElement('div');
             row.className = 'rarity-row';
 
+            // Ромб
+            const diamond = document.createElement('span');
+            diamond.className = `diamond diamond-${r.name.toLowerCase()}`;
+            diamond.textContent = '◆';
+
+            // Название
             const nameSpan = document.createElement('span');
             nameSpan.className = `name name-${r.name.toLowerCase()}`;
             nameSpan.textContent = r.name;
 
+            // Шкала
             const barWrap = document.createElement('div');
             barWrap.className = 'bar-wrap';
             const bar = document.createElement('div');
@@ -1042,10 +1064,12 @@
             }
             barWrap.appendChild(bar);
 
+            // Процент
             const percentSpan = document.createElement('span');
             percentSpan.className = `percent percent-${r.name.toLowerCase()}`;
             percentSpan.textContent = (r.percent !== null && r.percent !== undefined) ? r.percent + '%' : '??';
 
+            row.appendChild(diamond);
             row.appendChild(nameSpan);
             row.appendChild(barWrap);
             row.appendChild(percentSpan);
@@ -1080,11 +1104,6 @@
             lastUpdateMid = timestamp;
 
             const now = new Date();
-            let target = new Date(now);
-            target.setHours(24, 0, 0, 0); // следующая полночь
-
-            // если сейчас уже после 20:31, то цель — завтрашняя полночь, но нам нужно до 0:00 текущей ночи
-            // на самом деле мы считаем до 0:00 текущей ночи, если сейчас до 0:00, иначе до следующей
             let midnight = new Date(now);
             midnight.setHours(24, 0, 0, 0);
             if (now >= midnight) {
