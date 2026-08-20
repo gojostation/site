@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <title>GOJO STATION</title>
     <style>
+        /* ─── СБРОС ─── */
         * {
             margin: 0;
             padding: 0;
@@ -27,14 +28,14 @@
                 radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
                 radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
                 linear-gradient(180deg, #08080e 0%, #0c0c18 100%);
-            padding: 12px 16px;
+            padding: 10px 14px;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             width: 100%;
             height: 100%;
-            max-height: 700px;
+            max-height: 780px;
             display: flex;
             flex-direction: column;
         }
@@ -44,9 +45,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             flex-shrink: 0;
         }
 
@@ -57,62 +58,68 @@
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             background: linear-gradient(145deg, #ffffff, #d0d0e0);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 900;
             color: #0a0a12;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
             flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+        .logo-icon:hover {
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.08);
         }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
         .logo-text h1 {
             font-size: 20px;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #ffffff;
             line-height: 1;
         }
 
         .logo-text small {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 300;
-            color: #5a5a72;
+            color: #4a4a62;
             letter-spacing: 3px;
             display: block;
+            margin-top: -1px;
         }
 
         .header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .header-time {
-            color: #5a5a72;
-            font-size: 13px;
+            color: #4a4a62;
+            font-size: 12px;
         }
 
         .admin-toggle {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: #5a5a72;
-            padding: 5px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #4a4a62;
+            padding: 4px 12px;
             border-radius: 40px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
             transition: 0.3s;
         }
@@ -130,30 +137,37 @@
         /* ─── ОСНОВНАЯ СЕТКА ─── */
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 280px 1fr 280px;
             gap: 10px;
             flex: 1;
             min-height: 0;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 900px) {
             .main-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 8px;
             }
             .container { max-height: none; height: 100%; overflow-y: auto; }
-            body { overflow-y: auto; padding: 10px 12px; }
+            body { overflow-y: auto; padding: 8px 10px; }
             html, body { overflow-y: auto; }
+        }
+
+        @media (max-width: 600px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
         }
 
         /* ─── КАРТОЧКИ ─── */
         .card {
-            background: rgba(12, 12, 22, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            padding: 14px 18px;
+            background: rgba(12, 12, 22, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 12px 14px;
             transition: all 0.3s ease;
             animation: fadeUp 0.5s ease forwards;
             opacity: 0;
@@ -172,13 +186,12 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 60%);
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.015) 0%, transparent 60%);
             pointer-events: none;
         }
 
         .card:hover {
-            border-color: rgba(255, 255, 255, 0.07);
-            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.06);
         }
 
         .card:nth-child(1) { animation-delay: 0.05s; }
@@ -187,113 +200,141 @@
         .card:nth-child(4) { animation-delay: 0.20s; }
         .card:nth-child(5) { animation-delay: 0.25s; }
         .card:nth-child(6) { animation-delay: 0.30s; }
-        .card:nth-child(7) { animation-delay: 0.35s; }
-
-        .full-width {
-            grid-column: 1 / -1;
-        }
 
         .card-label {
-            font-size: 9px;
+            font-size: 8px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #4a4a62;
+            color: #3a3a52;
             font-weight: 600;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
-        .card-label-sm {
+        .card-label-light {
             font-size: 8px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #4a4a62;
-            font-weight: 600;
+            font-weight: 500;
         }
 
-        /* ─── СЕРИЯ ─── */
+        /* ─── ЛЕВАЯ КОЛОНКА ─── */
+        .left-col .card {
+            padding: 10px 14px;
+        }
+
+        /* Серия */
         .series-wrap {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .fire-icon {
-            font-size: 22px;
-            animation: fireGlow 2s ease-in-out infinite;
+            font-size: 20px;
+            opacity: 0.3;
+            animation: fireGrow 1.2s ease forwards;
             display: inline-block;
         }
 
+        @keyframes fireGrow {
+            0% { opacity: 0.2; transform: scale(0.6); filter: drop-shadow(0 0 0px rgba(255, 200, 50, 0)); }
+            60% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 200, 50, 0.4)); }
+            100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 200, 50, 0.2)); }
+        }
+
+        .fire-icon.active {
+            opacity: 1;
+            animation: fireGlow 2s ease-in-out infinite;
+        }
+
         @keyframes fireGlow {
-            0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.2)); }
-            50% { transform: scale(1.08) rotate(-3deg); filter: drop-shadow(0 0 20px rgba(255, 200, 50, 0.35)); }
+            0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.15)); }
+            50% { transform: scale(1.06) rotate(-3deg); filter: drop-shadow(0 0 20px rgba(255, 200, 50, 0.3)); }
         }
 
         .series-number {
-            font-size: 38px;
+            font-size: 34px;
             font-weight: 800;
             color: #ffffff;
             line-height: 1;
             letter-spacing: -1px;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
         }
 
         .series-sub {
-            color: #7a7a92;
-            font-size: 12px;
+            color: #6a6a82;
+            font-size: 11px;
             font-weight: 500;
         }
 
-        .series-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1px 10px;
-            border-radius: 40px;
-            font-size: 9px;
-            color: #6a6a82;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            margin-top: 1px;
+        /* Заморозка */
+        .freeze-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        /* ─── ЗАМОРОЗКА ─── */
+        .snow-icon {
+            font-size: 18px;
+            opacity: 0;
+            animation: snowSpin 1.5s ease 0.3s forwards;
+            display: inline-block;
+        }
+
+        @keyframes snowSpin {
+            0% { opacity: 0; transform: rotate(0deg) scale(0.5); }
+            100% { opacity: 1; transform: rotate(360deg) scale(1); }
+        }
+
+        .snow-icon.active {
+            animation: snowSpinLoop 4s linear infinite;
+        }
+
+        @keyframes snowSpinLoop {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .freeze-number {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #ffffff;
         }
 
         .freeze-status {
             color: #6dd5ed;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
         }
 
         .freeze-next {
-            color: #5a5a72;
-            font-size: 11px;
+            color: #4a4a62;
+            font-size: 9px;
         }
 
-        /* ─── ДОСТИЖЕНИЯ ─── */
+        /* Достижения */
         .achieve-number {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: #ffffff;
         }
 
         .achieve-number span {
-            color: #4a4a62;
+            color: #3a3a52;
             font-weight: 400;
         }
 
         .achieve-last {
-            color: #5a5a72;
-            font-size: 11px;
-            margin: 1px 0 4px;
+            color: #4a4a62;
+            font-size: 9px;
+            margin: 1px 0 3px;
         }
 
         .card-link {
-            color: #6a6a82;
+            color: #5a5a72;
             text-decoration: none;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
             transition: 0.3s;
             display: inline-flex;
@@ -304,53 +345,194 @@
 
         .card-link:hover {
             color: #ffffff;
-            border-bottom-color: rgba(255, 255, 255, 0.12);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
         }
 
         .card-link .arrow {
             transition: 0.3s;
+            font-size: 12px;
         }
 
         .card-link:hover .arrow {
             transform: translateX(3px);
         }
 
-        /* ─── СЕГОДНЯШНЯЯ КАРТОЧКА ─── */
-        .today-card {
+        /* ТГ блок */
+        .tg-row {
             display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tg-icon {
+            font-size: 16px;
+        }
+
+        .tg-text {
+            color: #5a5a72;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .tg-link {
+            color: #7a7a92;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: 0.3s;
+        }
+
+        .tg-link:hover {
+            color: #ffffff;
+        }
+
+        .tg-link .icon-link {
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .tg-link:hover .icon-link {
+            transform: translate(2px, -2px);
+        }
+
+        /* ─── ЦЕНТРАЛЬНАЯ КОЛОНКА ─── */
+        .center-col .card {
+            padding: 10px 14px;
+        }
+
+        /* Рандомный выбор */
+        .diamond-icon {
+            font-size: 16px;
+            color: #3a3a52;
+        }
+
+        /* Сегодняшняя карточка */
+        .today-header {
+            display: flex;
+            justify-content: space-between;
             align-items: baseline;
-            gap: 10px;
-            flex-wrap: wrap;
         }
 
         .today-time {
-            font-size: 30px;
+            font-size: 18px;
             font-weight: 700;
             color: #ffffff;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
         }
 
-        .today-rarity {
-            color: #b0b0c8;
-            font-size: 13px;
+        .card-preview {
+            background: repeating-conic-gradient(rgba(255,255,255,0.02) 0% 25%, transparent 0% 50%) 0 0 / 12px 12px;
+            border-radius: 10px;
+            height: 70px;
+            margin: 4px 0 6px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3a3a52;
+            font-size: 11px;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 2px 14px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .today-sub {
-            color: #6a6a82;
-            font-size: 12px;
+        .card-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
         }
 
-        /* ─── ТАЙМЕР ─── */
+        .card-preview .placeholder {
+            color: #3a3a52;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .today-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .today-name {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .today-date {
+            color: #4a4a62;
+            font-size: 9px;
+        }
+
+        .today-tg-link {
+            color: #5a5a72;
+            text-decoration: none;
+            font-size: 9px;
+            font-weight: 500;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .today-tg-link:hover {
+            color: #ffffff;
+        }
+
+        /* ─── ПРАВАЯ КОЛОНКА ─── */
+        .right-col .card {
+            padding: 10px 14px;
+        }
+
+        /* Разделитель */
+        .divider-line {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin: 4px 0;
+        }
+
+        /* Сегодняшняя редкость */
+        .rarity-today-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diamond-purple {
+            font-size: 16px;
+            color: #7a5cff;
+            filter: drop-shadow(0 0 10px rgba(122, 92, 255, 0.15));
+        }
+
+        .rarity-today-label {
+            color: #4a4a62;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .rarity-today-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: #b7a9ff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(122, 92, 255, 0.05);
+        }
+
+        /* Таймер */
         .timer-wrap {
             display: flex;
-            gap: 16px;
+            gap: 10px;
             justify-content: center;
-            padding: 4px 0;
+            padding: 2px 0;
         }
 
         .timer-unit {
@@ -358,25 +540,25 @@
         }
 
         .timer-unit .num {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 1px;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
             font-variant-numeric: tabular-nums;
         }
 
         .timer-unit .label {
-            font-size: 8px;
+            font-size: 7px;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #3a3a52;
-            margin-top: 1px;
+            margin-top: 0px;
         }
 
         .timer-divider {
             color: #3a3a52;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 300;
             display: flex;
             align-items: center;
@@ -384,119 +566,148 @@
 
         .timer-arrival {
             text-align: center;
-            color: #5a5a72;
-            font-size: 11px;
+            color: #4a4a62;
+            font-size: 9px;
             margin-top: 1px;
         }
 
-        /* ─── РЕДКОСТИ ─── */
-        .rarity-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px 20px;
+        .timer-line {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin: 4px 0 3px;
         }
 
-        .rarity-item {
+        /* Редкости карточек со шкалами */
+        .rarity-list {
             display: flex;
-            justify-content: space-between;
-            padding: 3px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            flex-direction: column;
+            gap: 3px;
         }
 
-        .rarity-item .name {
-            color: #7a7a92;
-            font-size: 12px;
-        }
-
-        .rarity-item .percent {
-            font-weight: 600;
-            color: #b0b0c8;
-            font-size: 12px;
-        }
-
-        /* ─── ПОСТ ─── */
-        .post-row {
+        .rarity-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
+            gap: 8px;
         }
 
-        .post-row .date {
-            color: #5a5a72;
-            font-size: 11px;
+        .rarity-row .name {
+            color: #7a7a92;
+            font-size: 10px;
+            font-weight: 500;
+            min-width: 60px;
         }
 
-        .post-row .title {
-            color: #ffffff;
+        .rarity-row .bar-wrap {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .rarity-row .bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+            width: 0%;
+        }
+
+        .rarity-row .bar.animated {
+            animation: barGrow 0.8s ease forwards;
+        }
+
+        @keyframes barGrow {
+            from { width: 0%; }
+            to { width: var(--width); }
+        }
+
+        .rarity-row .percent {
+            color: #b0b0c8;
+            font-size: 10px;
             font-weight: 600;
-            font-size: 13px;
+            min-width: 32px;
+            text-align: right;
         }
 
-        /* ─── CTA ─── */
-        .cta-banner {
-            background: rgba(12, 12, 22, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            padding: 12px 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: fadeUp 0.5s ease 0.40s forwards;
-            opacity: 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            flex-shrink: 0;
-            margin-top: 10px;
-        }
-
-        .cta-banner:hover {
-            border-color: rgba(255, 255, 255, 0.07);
-        }
-
-        .cta-banner h3 {
-            font-size: 15px;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .cta-banner .sub {
-            color: #5a5a72;
-            font-size: 12px;
-        }
-
-        .btn-telegram {
-            display: inline-block;
-            margin-top: 6px;
-            padding: 8px 32px;
-            background: linear-gradient(145deg, #ffffff, #d0d0e0);
-            color: #0a0a12;
+        .rarity-row .percent-secret {
+            color: #ff6b8a;
+            font-size: 10px;
             font-weight: 700;
-            text-decoration: none;
-            border-radius: 60px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.03);
-            font-size: 13px;
+            min-width: 32px;
+            text-align: right;
         }
 
-        .btn-telegram:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 30px rgba(255, 255, 255, 0.06);
+        /* Цвета редкостей */
+        .bar-common { background: #6a6a7a; }
+        .bar-rare { background: #4a8fcf; }
+        .bar-epic { background: #7a5cff; }
+        .bar-mythic { background: #ff4a6a; }
+        .bar-legendary { background: #ffb347; }
+        .bar-exclusive { background: linear-gradient(90deg, #ff6b8a, #ffb347, #7a5cff); background-size: 200%; animation: exclusiveGradient 3s ease infinite; }
+
+        @keyframes exclusiveGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .rarity-row .name-common { color: #6a6a7a; }
+        .rarity-row .name-rare { color: #4a8fcf; }
+        .rarity-row .name-epic { color: #7a5cff; }
+        .rarity-row .name-mythic { color: #ff4a6a; }
+        .rarity-row .name-legendary { color: #ffb347; }
+        .rarity-row .name-exclusive { color: #ff6b8a; }
+
+        /* ─── АНИМАЦИИ ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── АДАПТИВ ─── */
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .container { max-height: none; overflow-y: auto; }
+            body { overflow-y: auto; padding: 10px; }
+            html, body { overflow-y: auto; }
+            .card-preview { height: 50px; }
+            .timer-unit .num { font-size: 22px; }
+            .series-number { font-size: 28px; }
+            .rarity-today-value { font-size: 18px; }
+        }
+
+        @media (max-width: 600px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .card { padding: 8px 12px; }
+            .series-number { font-size: 24px; }
+            .timer-unit .num { font-size: 20px; }
+            .timer-wrap { gap: 6px; }
+            .rarity-row .name { min-width: 45px; font-size: 9px; }
+            .logo-text h1 { font-size: 16px; }
+            .logo-icon { width: 32px; height: 32px; font-size: 12px; }
+            .card-preview { height: 40px; }
+            .today-time { font-size: 14px; }
+            .rarity-today-value { font-size: 16px; }
         }
 
         /* ─── АДМИН-ПАНЕЛЬ ─── */
         .admin-panel {
             display: none;
-            margin-top: 8px;
+            margin-top: 6px;
             background: rgba(12, 12, 22, 0.95);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 16px 20px;
+            border-radius: 14px;
+            padding: 12px 16px;
             animation: fadeUp 0.4s ease forwards;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             flex-shrink: 0;
-            max-height: 300px;
+            max-height: 200px;
             overflow-y: auto;
         }
 
@@ -505,46 +716,44 @@
         }
 
         .admin-panel h2 {
-            font-size: 14px;
+            font-size: 12px;
             color: #ffffff;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .admin-panel h2 .badge {
-            font-size: 9px;
+            font-size: 8px;
             background: rgba(255, 255, 255, 0.04);
-            padding: 1px 10px;
+            padding: 1px 8px;
             border-radius: 40px;
-            color: #6a6a82;
+            color: #5a5a72;
             font-weight: 400;
         }
 
         .admin-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 6px;
         }
 
         @media (max-width: 600px) {
-            .admin-grid {
-                grid-template-columns: 1fr;
-            }
+            .admin-grid { grid-template-columns: 1fr; }
         }
 
         .admin-group {
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .admin-group label {
             display: block;
-            font-size: 9px;
-            color: #5a5a72;
+            font-size: 8px;
+            color: #4a4a62;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
             font-weight: 600;
         }
 
@@ -552,12 +761,12 @@
         .admin-group select,
         .admin-group textarea {
             width: 100%;
-            padding: 6px 10px;
+            padding: 4px 8px;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
+            border-radius: 8px;
             color: #e8e4f0;
-            font-size: 12px;
+            font-size: 10px;
             transition: 0.3s;
         }
 
@@ -565,18 +774,18 @@
         .admin-group select:focus,
         .admin-group textarea:focus {
             outline: none;
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .admin-group textarea {
             resize: vertical;
-            min-height: 30px;
+            min-height: 24px;
         }
 
         .admin-group .file-upload {
             border: 2px dashed rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 8px;
             text-align: center;
             cursor: pointer;
             transition: 0.3s;
@@ -592,30 +801,30 @@
         }
 
         .admin-group .file-upload .icon {
-            font-size: 18px;
+            font-size: 14px;
             display: block;
         }
 
         .admin-group .file-upload .text {
-            color: #5a5a72;
-            font-size: 10px;
+            color: #4a4a62;
+            font-size: 8px;
         }
 
         .admin-preview {
-            max-width: 80px;
-            border-radius: 10px;
-            margin-top: 4px;
+            max-width: 60px;
+            border-radius: 8px;
+            margin-top: 3px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .btn-admin {
-            padding: 6px 18px;
+            padding: 4px 14px;
             border: none;
             border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
-            font-size: 11px;
+            font-size: 9px;
         }
 
         .btn-admin-primary {
@@ -640,20 +849,13 @@
 
         .admin-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 6px;
         }
 
-        /* ─── АНИМАЦИИ ─── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ─── СКРОЛЛ ДЛЯ АДМИНКИ ─── */
         .admin-panel::-webkit-scrollbar {
-            width: 4px;
+            width: 3px;
         }
 
         .admin-panel::-webkit-scrollbar-track {
@@ -661,39 +863,9 @@
         }
 
         .admin-panel::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 4px;
         }
-
-        /* ─── ПОДСТРОЧНЫЕ ЭЛЕМЕНТЫ ─── */
-        .compact-row {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .text-muted {
-            color: #5a5a72;
-            font-size: 11px;
-        }
-
-        .text-white {
-            color: #ffffff;
-        }
-
-        .mt-1 { margin-top: 2px; }
-        .mb-1 { margin-bottom: 2px; }
-        .gap-1 { gap: 4px; }
-
-        .flex-col {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .flex-1 { flex: 1; }
-        .justify-between { justify-content: space-between; }
-        .items-center { align-items: center; }
     </style>
 </head>
 <body>
@@ -720,226 +892,121 @@
     <!-- ОСНОВНАЯ СЕТКА -->
     <div class="main-grid">
 
-        <!-- ЛЕВАЯ: СЕРИЯ -->
-        <div class="card">
-            <div class="card-label">✦ Текущая серия</div>
-            <div class="series-wrap">
-                <span class="fire-icon">🔥</span>
-                <span class="series-number" id="streakDays">47</span>
-            </div>
-            <div class="series-sub">дней подряд</div>
-            <span class="series-badge">🔥 рекорд</span>
-        </div>
+        <!-- ═══ ЛЕВАЯ КОЛОНКА ═══ -->
+        <div class="left-col" style="display:flex; flex-direction:column; gap:10px;">
 
-        <!-- ПРАВАЯ: ДОСТИЖЕНИЯ -->
-        <div class="card">
-            <div class="card-label">🏆 Достижения</div>
-            <div class="compact-row">
-                <span class="achieve-number">— <span>/ 50</span></span>
-            </div>
-            <div class="achieve-last">Последнее: —</div>
-            <a href="#" class="card-link">Все достижения →</a>
-        </div>
-
-        <!-- ЛЕВАЯ: ЗАМОРОЗКА -->
-        <div class="card">
-            <div class="card-label">❄️ Заморозка</div>
-            <div class="freeze-number" id="freezeDisplay">1 / 1</div>
-            <div class="freeze-status" id="freezeStatus">Доступна</div>
-            <div class="freeze-next" id="freezeNext">Следующая через 15 прибытий</div>
-        </div>
-
-        <!-- ПРАВАЯ: РАНДОМНЫЙ ВЫБОР РЕДКОСТИ -->
-        <div class="card">
-            <div class="card-label">💎 Рандомный выбор редкости</div>
-            <div style="color:#5a5a72; font-size:12px;">Ежедневно в 00:00</div>
-        </div>
-
-        <!-- ПОЛНАЯ ШИРИНА: СЕГОДНЯШНЯЯ КАРТОЧКА -->
-        <div class="card full-width" style="padding:12px 18px;">
-            <div class="card-label">🕐 Сегодняшняя карточка</div>
-            <div class="today-card">
-                <span class="today-time" id="todayTime">20:31</span>
-                <span class="today-rarity" id="todayRarity">Эпическая</span>
-                <span class="today-sub">Годко прибудет в 20:31</span>
-            </div>
-        </div>
-
-        <!-- ПОЛНАЯ ШИРИНА: ТАЙМЕР -->
-        <div class="card full-width" style="padding:10px 18px;">
-            <div class="timer-wrap" id="timer">
-                <div class="timer-unit">
-                    <div class="num" id="hours">05</div>
-                    <div class="label">Часов</div>
-                </div>
-                <span class="timer-divider">:</span>
-                <div class="timer-unit">
-                    <div class="num" id="minutes">38</div>
-                    <div class="label">Минут</div>
-                </div>
-                <span class="timer-divider">:</span>
-                <div class="timer-unit">
-                    <div class="num" id="seconds">12</div>
-                    <div class="label">Секунд</div>
+            <!-- СЕРИЯ -->
+            <div class="card">
+                <div class="card-label">✦ Прибытия подряд</div>
+                <div class="series-wrap">
+                    <span class="fire-icon active">🔥</span>
+                    <span class="series-number" id="streakDays">47</span>
                 </div>
             </div>
-            <div class="timer-arrival">До следующего прибытия</div>
-        </div>
 
-        <!-- ПОЛНАЯ ШИРИНА: РЕДКОСТИ КАРТОЧЕК -->
-        <div class="card full-width" style="padding:10px 18px;">
-            <div class="card-label">📊 Редкости карточек</div>
-            <div class="rarity-grid" id="rarityList">
-                <div class="rarity-item"><span class="name">Обычная</span><span class="percent">60%</span></div>
-                <div class="rarity-item"><span class="name">Необычная</span><span class="percent">25%</span></div>
-                <div class="rarity-item"><span class="name">Редкая</span><span class="percent">10%</span></div>
-                <div class="rarity-item"><span class="name">Эпическая</span><span class="percent">4%</span></div>
-                <div class="rarity-item"><span class="name">Легендарная</span><span class="percent">0.9%</span></div>
-                <div class="rarity-item"><span class="name">Эксклюзивная</span><span class="percent">0.1%</span></div>
-            </div>
-        </div>
-
-        <!-- ЛЕВАЯ: ПОСТ -->
-        <div class="card">
-            <div class="card-label">🦁 Годко на льве</div>
-            <div class="post-row">
-                <div>
-                    <div class="title">Годко на льве</div>
-                    <div class="date">18.05.2025 • День 47</div>
+            <!-- ЗАМОРОЗКА -->
+            <div class="card">
+                <div class="card-label">❄️ Заморозка</div>
+                <div class="freeze-wrap">
+                    <span class="snow-icon active">❄️</span>
+                    <span class="freeze-number" id="freezeDisplay">1 / 1</span>
                 </div>
-                <a href="https://t.me/gojostation" target="_blank" class="card-link">
-                    Смотреть →
+                <div class="freeze-status" id="freezeStatus">Доступна</div>
+                <div class="freeze-next" id="freezeNext">Каждые 15 прибытий подряд</div>
+            </div>
+
+            <!-- ДОСТИЖЕНИЯ -->
+            <div class="card">
+                <div class="card-label">🏆 Достижения</div>
+                <div class="achieve-number">— <span>/ 50</span></div>
+                <div class="achieve-last">Последнее полученное: —</div>
+                <a href="#" class="card-link">Все достижения →</a>
+            </div>
+
+            <!-- ТЕЛЕГРАМ -->
+            <div class="card">
+                <div class="tg-row">
+                    <span class="tg-icon">📩</span>
+                    <span class="tg-text">Прибытия каждый день в 20:31</span>
+                </div>
+                <a href="https://t.me/gojostation" target="_blank" class="tg-link">
+                    перейти в телеграмм <span class="icon-link">↗</span>
                 </a>
             </div>
+
         </div>
 
-        <!-- ПРАВАЯ: О РЕДКОСТЯХ -->
-        <div class="card">
-            <div class="card-label">📖 О редкостях</div>
-            <div style="color:#5a5a72; font-size:11px; margin-bottom:4px;">
-                Узнай больше о системе редкостей
+        <!-- ═══ ЦЕНТРАЛЬНАЯ КОЛОНКА ═══ -->
+        <div class="center-col" style="display:flex; flex-direction:column; gap:10px;">
+
+            <!-- РАНДОМНЫЙ ВЫБОР РЕДКОСТИ -->
+            <div class="card">
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <span class="diamond-icon">💎</span>
+                    <span class="card-label" style="font-size:9px;">Рандомный выбор редкости карточки</span>
+                </div>
+                <div style="color:#3a3a52; font-size:9px; margin-top:1px;">Ежедневно в 0:00</div>
             </div>
-            <a href="#" class="card-link">Подробнее →</a>
+
+            <!-- СЕГОДНЯШНЯЯ КАРТОЧКА -->
+            <div class="card" style="flex:1;">
+                <div class="today-header">
+                    <span class="card-label">🕐 Сегодняшняя карточка</span>
+                    <span class="today-time" id="todayTime">20:31</span>
+                </div>
+                <div class="card-preview" id="cardPreview">
+                    <span class="placeholder">📸 карточка</span>
+                </div>
+                <div class="today-footer">
+                    <div>
+                        <div class="today-name" id="cardName">Годжо тест</div>
+                        <div class="today-date" id="cardDate">20.08.2026 • День 47</div>
+                    </div>
+                    <a href="https://t.me/gojostation" target="_blank" class="today-tg-link">
+                        смотреть в телеграмм ↗
+                    </a>
+                </div>
+            </div>
+
         </div>
 
-    </div>
+        <!-- ═══ ПРАВАЯ КОЛОНКА ═══ -->
+        <div class="right-col" style="display:flex; flex-direction:column; gap:10px;">
 
-    <!-- CTA БАННЕР -->
-    <div class="cta-banner">
-        <h3>📩 Получай карточку каждый день в 20:31</h3>
-        <a href="https://t.me/gojostation" target="_blank" class="btn-telegram">Перейти в Telegram →</a>
-    </div>
-
-    <!-- АДМИН-ПАНЕЛЬ -->
-    <div class="admin-panel" id="adminPanel">
-        <h2>⚙️ Администратор <span class="badge">управление сайтом</span></h2>
-        <div class="admin-grid">
-            <div>
-                <div class="admin-group">
-                    <label>Название карточки</label>
-                    <input type="text" id="adminCardName" placeholder="20:31" />
-                </div>
-                <div class="admin-group">
-                    <label>Редкость</label>
-                    <select id="adminCardRarity">
-                        <option value="Обычная">Обычная</option>
-                        <option value="Необычная">Необычная</option>
-                        <option value="Редкая">Редкая</option>
-                        <option value="Эпическая" selected>Эпическая</option>
-                        <option value="Легендарная">Легендарная</option>
-                        <option value="Эксклюзивная">Эксклюзивная</option>
-                    </select>
-                </div>
-                <div class="admin-group">
-                    <label>Прибытий подряд</label>
-                    <input type="number" id="adminStreak" min="0" value="47" />
-                </div>
-            </div>
-            <div>
-                <div class="admin-group">
-                    <label>Заморозка (доступно / макс)</label>
-                    <div style="display:flex; gap:6px;">
-                        <input type="number" id="adminFreezeAvailable" min="0" value="1" style="flex:1;" />
-                        <span style="color:#4a4a62; display:flex; align-items:center;">/</span>
-                        <input type="number" id="adminFreezeMax" min="1" value="1" style="flex:1;" />
+            <!-- СЕГОДНЯШНЯЯ РЕДКОСТЬ -->
+            <div class="card">
+                <div class="rarity-today-wrap">
+                    <span class="diamond-purple">💎</span>
+                    <div>
+                        <div class="rarity-today-label">Сегодняшняя редкость</div>
+                        <div class="rarity-today-value" id="todayRarityValue">ЭПИЧЕСКАЯ</div>
                     </div>
                 </div>
-                <div class="admin-group">
-                    <label>Статус</label>
-                    <select id="adminFreezeStatus">
-                        <option value="Доступна">Доступна</option>
-                        <option value="Использована">Использована</option>
-                        <option value="Недоступна">Недоступна</option>
-                    </select>
-                </div>
-                <div class="admin-group">
-                    <label>Фото</label>
-                    <div class="file-upload" id="adminFileUpload">
-                        <span class="icon">🖼️</span>
-                        <span class="text">Загрузить фото</span>
-                        <input type="file" accept="image/*" id="adminCardImage" />
-                    </div>
-                    <div id="adminImagePreview"></div>
-                </div>
             </div>
-        </div>
-        <div class="admin-actions">
-            <button class="btn-admin btn-admin-primary" id="adminSaveBtn">💾 Сохранить</button>
-            <button class="btn-admin btn-admin-danger" id="adminResetBtn">🔄 Сброс</button>
-        </div>
-    </div>
 
-</div>
+            <!-- ДО СЛЕДУЮЩЕГО ПРИБЫТИЯ -->
+            <div class="card">
+                <div class="card-label-light">До следующего прибытия</div>
+                <div class="timer-wrap" id="timer">
+                    <div class="timer-unit">
+                        <div class="num" id="hours">05</div>
+                        <div class="label">Часов</div>
+                    </div>
+                    <span class="timer-divider">:</span>
+                    <div class="timer-unit">
+                        <div class="num" id="minutes">38</div>
+                        <div class="label">Минут</div>
+                    </div>
+                    <span class="timer-divider">:</span>
+                    <div class="timer-unit">
+                        <div class="num" id="seconds">12</div>
+                        <div class="label">Секунд</div>
+                    </div>
+                </div>
+                <hr class="timer-line" />
+                <div class="timer-arrival">Годжо прибудет в <span id="arrivalTime">20:31</span></div>
+            </div>
 
-<script>
-    // ─── ХРАНИЛИЩЕ ───
-    const STORAGE_KEY = 'gojo_station_data';
-
-    const defaultData = {
-        card: { name: '20:31', rarity: 'Эпическая', collection: 'Москва (17/50)', description: '', image: '' },
-        streak: { days: 47 },
-        freeze: { available: 1, max: 1, status: 'Доступна' },
-        rarities: [
-            { name: 'Обычная', percent: 60 },
-            { name: 'Необычная', percent: 25 },
-            { name: 'Редкая', percent: 10 },
-            { name: 'Эпическая', percent: 4 },
-            { name: 'Легендарная', percent: 0.9 },
-            { name: 'Эксклюзивная', percent: 0.1 },
-        ],
-    };
-
-    let appData = loadData();
-
-    function loadData() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) {
-                const data = JSON.parse(raw);
-                return { ...defaultData, ...data };
-            }
-        } catch (e) {}
-        return JSON.parse(JSON.stringify(defaultData));
-    }
-
-    function saveData(data) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-
-    function updateUI() {
-        document.getElementById('streakDays').textContent = appData.streak.days;
-        document.getElementById('freezeDisplay').textContent = `${appData.freeze.available} / ${appData.freeze.max}`;
-        document.getElementById('freezeStatus').textContent = appData.freeze.status;
-        document.getElementById('todayTime').textContent = appData.card.name || '20:31';
-        document.getElementById('todayRarity').textContent = appData.card.rarity || 'Эпическая';
-
-        const list = document.getElementById('rarityList');
-        list.innerHTML = appData.rarities.map(r =>
-            `<div class="rarity-item"><span class="name">${r.name}</span><span class="percent">${r.percent}%</span></div>`
-        ).join('');
-
-        document.getElementById('adminCardName').value = appData.card.name || '';
-        document.getElementById('adminCardRarity').value = appData.card.rarity || 'Эпическая';
-        document.getElementById('adminStreak').value = appData.streak.days || 47;
-        document.getElementById('adminFreezeAvailable').value = appData.freeze.available || 1;
-        document
+            <!-- РЕДКОСТИ КАРТОЧЕК -->
+            <div class="card" style="flex:1;">
+                <div class
