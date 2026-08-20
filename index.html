@@ -59,6 +59,7 @@
             box-shadow: 0 0 60px rgba(255, 255, 255, 0.06);
             flex-shrink: 0;
             transition: 0.4s;
+            will-change: transform;
         }
 
         .logo-icon:hover {
@@ -105,6 +106,7 @@
             font-size: 13px;
             font-weight: 500;
             transition: 0.3s;
+            will-change: transform;
         }
 
         .admin-toggle:hover {
@@ -152,6 +154,7 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            will-change: transform, opacity;
         }
 
         .card::before {
@@ -202,6 +205,8 @@
         .fire-icon {
             font-size: 28px;
             animation: fireGlow 2s ease-in-out infinite;
+            will-change: transform;
+            display: inline-block;
         }
 
         @keyframes fireGlow {
@@ -216,6 +221,7 @@
             line-height: 1;
             letter-spacing: -2px;
             text-shadow: 0 0 60px rgba(255, 255, 255, 0.03);
+            will-change: contents;
         }
 
         .series-sub {
@@ -326,7 +332,7 @@
             font-size: 15px;
         }
 
-        /* ─── ТАЙМЕР ─── */
+        /* ─── ТАЙМЕР (ОПТИМИЗИРОВАН) ─── */
         .timer-wrap {
             display: flex;
             gap: 32px;
@@ -344,6 +350,8 @@
             color: #ffffff;
             letter-spacing: 2px;
             text-shadow: 0 0 60px rgba(255, 255, 255, 0.03);
+            will-change: contents;
+            font-variant-numeric: tabular-nums;
         }
 
         .timer-unit .label {
@@ -468,6 +476,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 30px rgba(255, 255, 255, 0.03);
             font-size: 15px;
+            will-change: transform;
         }
 
         .btn-telegram:hover {
@@ -606,6 +615,7 @@
             cursor: pointer;
             transition: 0.3s;
             font-size: 14px;
+            will-change: transform;
         }
 
         .btn-admin-primary {
@@ -653,6 +663,7 @@
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
             animation: fadeUp 0.4s ease forwards;
             z-index: 999;
+            will-change: transform, opacity;
         }
 
         /* ─── АНИМАЦИИ ─── */
@@ -758,7 +769,7 @@
             </div>
         </div>
 
-        <!-- ПОЛНАЯ ШИРИНА: ТАЙМЕР -->
+        <!-- ПОЛНАЯ ШИРИНА: ТАЙМЕР (ОПТИМИЗИРОВАН) -->
         <div class="card full-width" style="padding:18px 24px;">
             <div class="timer-wrap" id="timer">
                 <div class="timer-unit">
@@ -829,7 +840,6 @@
         <h2>⚙️ Администратор <span class="badge">управление сайтом</span></h2>
 
         <div class="admin-grid">
-            <!-- Левая колонка -->
             <div>
                 <div class="admin-group">
                     <label>Название карточки</label>
@@ -859,7 +869,6 @@
                 </div>
             </div>
 
-            <!-- Правая колонка -->
             <div>
                 <div class="admin-group">
                     <label>Заморозка (доступно / максимум)</label>
@@ -951,25 +960,18 @@
 
     // ─── ОБНОВЛЕНИЕ UI ───
     function updateUI() {
-        // Серия
         document.getElementById('streakDays').textContent = appData.streak.days;
-
-        // Заморозка
         document.getElementById('freezeDisplay').textContent =
             `${appData.freeze.available} / ${appData.freeze.max}`;
         document.getElementById('freezeStatus').textContent = appData.freeze.status;
-
-        // Карточка
         document.getElementById('todayTime').textContent = appData.card.name || '20:31';
         document.getElementById('todayRarity').textContent = appData.card.rarity || 'Эпическая';
 
-        // Редкости
         const list = document.getElementById('rarityList');
         list.innerHTML = appData.rarities.map(r =>
             `<div class="rarity-item"><span class="name">${r.name}</span><span class="percent">${r.percent}%</span></div>`
         ).join('');
 
-        // Админка
         document.getElementById('adminCardName').value = appData.card.name || '';
         document.getElementById('adminCardRarity').value = appData.card.rarity || 'Эпическая';
         document.getElementById('adminCollection').value = appData.card.collection || '';
@@ -979,7 +981,6 @@
         document.getElementById('adminFreezeStatus').value = appData.freeze.status || 'Доступна';
         document.getElementById('adminDescription').value = appData.card.description || '';
 
-        // Превью фото
         const preview = document.getElementById('adminImagePreview');
         if (appData.card.image) {
             preview.innerHTML = `<img src="${appData.card.image}" class="admin-preview" alt="превью" />`;
@@ -988,7 +989,54 @@
         }
     }
 
-    // ─── СОХРАНЕНИЕ ───
+    // ─── ТАЙМЕР (ОПТИМИЗИРОВАННЫЙ — 60 FPS) ───
+    let lastTimerUpdate = 0;
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    function updateTimer(timestamp) {
+        // Обновляем не чаще 1 раза в секунду (но через requestAnimationFrame)
+        if (timestamp - lastTimerUpdate >= 1000) {
+            lastTimerUpdate = timestamp;
+
+            const now = new Date();
+            let target = new Date(now);
+            target.setHours(20, 31, 0, 0);
+
+            if (now >= target) {
+                target.setDate(target.getDate() + 1);
+            }
+
+            let diff = Math.floor((target - now) / 1000);
+            if (diff < 0) diff = 0;
+
+            const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+
+            // Обновляем только если изменилось
+            if (hoursEl.textContent !== h) hoursEl.textContent = h;
+            if (minutesEl.textContent !== m) minutesEl.textContent = m;
+            if (secondsEl.textContent !== s) secondsEl.textContent = s;
+        }
+        requestAnimationFrame(updateTimer);
+    }
+
+    // Запускаем таймер
+    requestAnimationFrame(updateTimer);
+
+    // ─── ВРЕМЯ В ШАПКЕ ───
+    function updateHeaderTime() {
+        const now = new Date();
+        document.getElementById('headerTime').textContent =
+            String(now.getHours()).padStart(2, '0') + ':' +
+            String(now.getMinutes()).padStart(2, '0');
+    }
+    updateHeaderTime();
+    setInterval(updateHeaderTime, 30000);
+
+    // ─── АДМИНКА ───
     document.getElementById('adminSaveBtn').addEventListener('click', function() {
         appData.card.name = document.getElementById('adminCardName').value.trim() || '20:31';
         appData.card.rarity = document.getElementById('adminCardRarity').value;
@@ -1009,7 +1057,6 @@
         showToast('✅ Всё сохранено!');
     });
 
-    // ─── ЗАГРУЗКА ФОТО ───
     document.getElementById('adminFileUpload').addEventListener('click', function() {
         document.getElementById('adminCardImage').click();
     });
@@ -1028,7 +1075,6 @@
         reader.readAsDataURL(file);
     });
 
-    // ─── СБРОС ───
     document.getElementById('adminResetBtn').addEventListener('click', function() {
         if (!confirm('⚠️ Сбросить все данные к стандартным?')) return;
         appData = JSON.parse(JSON.stringify(defaultData));
@@ -1037,7 +1083,6 @@
         showToast('🔄 Данные сброшены');
     });
 
-    // ─── ТОГГЛ АДМИНКИ ───
     document.getElementById('adminToggle').addEventListener('click', function() {
         const panel = document.getElementById('adminPanel');
         panel.classList.toggle('open');
@@ -1045,38 +1090,6 @@
         this.textContent = panel.classList.contains('open') ? '🔒 Закрыть' : '⚙️ Администратор';
     });
 
-    // ─── ТАЙМЕР ───
-    function updateTimer() {
-        const now = new Date();
-        let target = new Date(now);
-        target.setHours(20, 31, 0, 0);
-
-        if (now >= target) {
-            target.setDate(target.getDate() + 1);
-        }
-
-        let diff = Math.floor((target - now) / 1000);
-        if (diff < 0) diff = 0;
-
-        document.getElementById('hours').textContent = String(Math.floor(diff / 3600)).padStart(2, '0');
-        document.getElementById('minutes').textContent = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
-        document.getElementById('seconds').textContent = String(diff % 60).padStart(2, '0');
-    }
-
-    updateTimer();
-    setInterval(updateTimer, 1000);
-
-    // ─── ВРЕМЯ В ШАПКЕ ───
-    function updateHeaderTime() {
-        const now = new Date();
-        document.getElementById('headerTime').textContent =
-            String(now.getHours()).padStart(2, '0') + ':' +
-            String(now.getMinutes()).padStart(2, '0');
-    }
-    updateHeaderTime();
-    setInterval(updateHeaderTime, 30000);
-
-    // ─── TOAST ───
     function showToast(message) {
         const existing = document.querySelector('.admin-toast');
         if (existing) existing.remove();
@@ -1089,7 +1102,6 @@
         setTimeout(() => toast.remove(), 2500);
     }
 
-    // ─── ЗАГРУЗКА ───
     updateUI();
 </script>
 
